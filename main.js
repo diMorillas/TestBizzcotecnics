@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // DOM básico
     let pageTest = document.getElementById('pageTest');
+    let pageForm = document.getElementById('pageForm');
 
     // Testing conexión con archivo JavaScript
     console.log('Successfully Connected to JavaScript File');
@@ -68,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             nextTest.addEventListener('click', () => {
                 testCounter <= 3 ? testCounter++ : console.error('Máximos test por jugador alcanzado');
                 numberTest.innerHTML = `${testCounter}/3`;
-                console.log("Número de test: " + testCounter);
 
                 // Gestión de SPA (se evalúa cada vez que cambia el contador)
                 testCounter == 3 ? nextTest.innerHTML = 'Finalizar' : nextTest.innerHTML = 'Siguiente';
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         pageTest.style.display = 'none';
                         clearInterval(countdown); // Detener la cuenta regresiva
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
+                        //pageForm.style.display ='block';
                     },500)
                 } else {
                     pageTest.style.display = 'block';
