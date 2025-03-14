@@ -51,6 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     numberTest.innerHTML = `${testCounter}/3`;
 
+    // Gestión Test Dinámico Botón
+    let nextTest = document.getElementById('btnNext');
+
+    nextTest.addEventListener('click',()=>{
+        testCounter < 3 ? testCounter++ : console.error('Máximos test por jugador alcanzado');
+        numberTest.innerHTML = `${testCounter}/3`;
+    });
 
 
 
