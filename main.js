@@ -30,8 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
             timer.textContent = timeRemaining;
 
-            timeRemaining <= 15 ? timer.style.color = 'red' : timer.style.color = ' white';
-    
+        if (timeRemaining <= 15) {
+            timer.style.color = 'red'; 
+            document.body.classList.add('timeout'); 
+        } else {
+            timer.style.color = 'white'; 
+            document.body.classList.remove('timeout'); 
+        }    
             if (timeRemaining <= 0) {
                 clearInterval(countdown);
                 console.log('Cuenta regresiva terminada de manera satisfactoria');
@@ -39,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
     timeRemainingTest();
+
+    // Gestión de número de test
+    let numberTest = document.getElementById('testCounter');
+    let testCounter = 1;
+
+    numberTest.innerHTML = `${testCounter}/3`;
+
 
 
 
