@@ -66,13 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let nextTest = document.getElementById('btnNext');
         if (nextTest) {
             nextTest.addEventListener('click', () => {
-                testCounter < 3 ? testCounter++ : console.error('Máximos test por jugador alcanzado');
+                testCounter <= 3 ? testCounter++ : console.error('Máximos test por jugador alcanzado');
                 numberTest.innerHTML = `${testCounter}/3`;
                 console.log("Número de test: " + testCounter);
 
                 // Gestión de SPA (se evalúa cada vez que cambia el contador)
-                if (testCounter == 3) {
+                testCounter == 3 ? nextTest.innerHTML = 'Finalizar' : nextTest.innerHTML = 'Siguiente';
+
+                if (testCounter == 4) {
                     numberTest.innerHTML = "3/3";
+                    nextTest.innerHTML = 'Finalizar'
+
                     setInterval(()=>{
                         pageTest.style.display = 'none';
                         clearInterval(countdown); // Detener la cuenta regresiva
