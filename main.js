@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Cuenta regresiva
-    let timeRemaining = 30;
+    let timeRemaining = 999; // Segundos 
     let countdown; // Declarar countdown fuera de la función
 
     const timeRemainingTest = () => {

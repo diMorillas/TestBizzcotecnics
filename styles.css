@@ -145,6 +145,18 @@ img{
     align-items: center;
 }
 
+/*Contenedor Form*/
+
+.containerForm{
+    width: 1211px;
+    height: 661px;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 75px;
+}
+
 /*Opciones Test Imagenes*/
 
 .optionSelected:hover {
