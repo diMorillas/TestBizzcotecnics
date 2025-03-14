@@ -26,6 +26,25 @@ img{
     width: 160px;
 }
 
+/*Body*/
+
+@keyframes grayscaleAnimation {
+    0% {
+        filter: grayscale(0%);
+    }
+    50% {
+        filter: grayscale(100%);
+    }
+    100% {
+        filter: grayscale(0%);
+    }
+}
+
+.timeOut {
+    animation: grayscaleAnimation 1.25s infinite;
+}
+
+
 /*Clases Auxiliares*/
 .o-100{
     opacity: 100%;
