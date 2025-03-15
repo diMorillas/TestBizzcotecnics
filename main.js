@@ -1,7 +1,12 @@
 import { Jugador } from './Jugador.js';
-import { ordenarJugadoresPorNombre } from './ordenarJugadores.js';
+//import { ordenarJugadoresPorNombre } from './ordenarJugadores.js';
+import { initDragAndDrop } from './drag.js';
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
+    initDragAndDrop();
     let pageTest = document.getElementById('pageTest');
     let pageForm = document.getElementById('pageForm');
     let pageFinal = document.getElementById('pageFinal');
@@ -147,7 +152,5 @@ document.addEventListener('DOMContentLoaded', () => {
     startAgain.addEventListener('click', () => {
         location.reload();
     });
-
-    
 
 });
