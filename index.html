@@ -1,160 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#4285f4" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Maname&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-    <script src="./main.js"></script>
-    <title>Blizzcotecnic</title>
-  </head>
-  <body>
-    <audio
-      src="./assets/music/bg-sound.mp3"
-      id="bg-music"
-      preload="auto"
-    ></audio>
-    <!--PAGE TEST-->
-    <div id="pageTest">
-      <!--Número de test (/)-->
-      <div id="counterContainer">
-        <span id="testCounter" class="o-100">1/3</span>
-      </div>
-      <!--Número de test (\)-->
 
-      <!--Texto Inicio con Contador (/)-->
-      <div class="containerStart">
-        <div class="startTitle">
-          <h1 style="font-size: 64px; font-weight: 200">Completa el Test</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4285f4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Maname&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="./main.js"></script>
+  <title>Blizzcotecnic</title>
+</head>
 
-          <h3 style="font-size: 32px; font-weight: 200">
-            arrastra la pieza que falta
-          </h3>
-          <br />
-          <span id="timer" style="font-size: 64px; font-weight: bold">20</span>
-        </div>
-      </div>
-      <!--Texto Inicio con Contador (\)-->
-
-      <!--Patrón D&D (/)-->
-      <div class="containerDrag">
-        <div class="figureOne">
-          <img src="./assets/images/ow.svg" />
-        </div>
-
-        <div class="figureTwo">
-          <img src="./assets/images/wow.svg" />
-        </div>
-
-        <div class="figureThree">
-          <img src="./assets/images/hots.png" />
-        </div>
-
-        <div class="figureFour"></div>
-      </div>
-      <!--Patrón D&D (\)-->
-
-      <!--Patrón Opciones D&D (/)-->
-      <div class="containerOptions">
-        <div class="optionOne">
-          <img
-            class="optionSelected"
-            src="./assets/images/ow.svg"
-            style="width: 80px"
-          />
-        </div>
-
-        <div class="optionTwo">
-          <img
-            class="optionSelected"
-            src="./assets/images/wow.svg"
-            style="width: 80px"
-          />
-        </div>
-
-        <div class="optionThree">
-          <img
-            class="optionSelected"
-            src="./assets/images/hots.png"
-            style="width: 80px"
-          />
-        </div>
-
-        <div class="optionFour">
-          <img
-            class="optionSelected"
-            src="./assets/images/hs.svg"
-            style="width: 80px"
-          />
-        </div>
-      </div>
-      <!--Patrón Opciones D&D (\)-->
-
-      <!--Botón Siguiente (/)-->
-      <button class="nextTest" id="btnNext">Siguiente</button>
-      <!--Botón Siguiente (\)-->
+<body>
+  <audio src="./assets/music/bg-sound.mp3" id="bg-music" preload="auto"></audio>
+  <!--PAGE TEST-->
+  <div id="pageTest">
+    <!--Número de test (/)-->
+    <div id="counterContainer">
+      <span id="testCounter" class="o-100">1/3</span>
     </div>
-    <!--PAGE FORM-->
-    <div id="pageForm" style="display: none;">
-      <div class="containerForm">
-        <h1 style="font-size: 64px; font-weight: 200">Introduce tus datos</h1>
+    <!--Número de test (\)-->
+
+    <!--Texto Inicio con Contador (/)-->
+    <div class="containerStart">
+      <div class="startTitle">
+        <h1 style="font-size: 64px; font-weight: 200">Completa el Test</h1>
 
         <h3 style="font-size: 32px; font-weight: 200">
-          para acceder a tu puntuación
+          arrastra la pieza que falta
         </h3>
-
-        <form action="" method="get">
-          <label style="margin-right: 469px;font-size: 24px;">Nombre<span style="color: red;">*</span></label><br>
-          <input type="text" id="nameForm">
-          <br><br>
-          <label style="margin-right: 484px;font-size: 24px;">Email<span style="color: red;">*</span></label><br>
-          <input type="email" id="emailForm">
-
-
-        </form>
+        <br />
+        <span id="timer" style="font-size: 64px; font-weight: bold">20</span>
       </div>
-      <div class="submitContainer">
-        <button type="submit" id="submitForm">Enviar</button>
-      </div>
-    </div> 
+    </div>
+    <!--Texto Inicio con Contador (\)-->
 
-    <!--PAGE RESULTS  ▲ ▼--> 
-    <div id="pageFinal" style="display: none;">
-      <div class="containerFinal">
-        <h1 style="font-size: 64px; font-weight: 200">Resultados</h1>
-
-        <h3 style="font-size: 32px; font-weight: 200">
-          Resultados globales de todos los jugadores
-        </h3>
-
-         <h4 class="playerName">Jugadores <span onclick="ordenarJugador()">▲</span>| <span>Tiempo <span>▲</span></span></h4>
-         <div class="containerPlayers">
-            <ul id="playerList">
-              
-            </ul>
-         </div>
-
-
+    <!--Patrón D&D (/)-->
+    <div class="containerDrag">
+      <div class="figureOne">
+        <img src="./assets/images/ow.svg" />
       </div>
 
-
-
-      <div class="submitContainer">
-        <button type="submit" id="newTest">Nuevo Test</button>
+      <div class="figureTwo">
+        <img src="./assets/images/wow.svg" />
       </div>
 
+      <div class="figureThree">
+        <img src="./assets/images/hots.png" />
+      </div>
+
+      <div class="figureFour"></div>
+    </div>
+    <!--Patrón D&D (\)-->
+
+    <!--Patrón Opciones D&D (/)-->
+    <div class="containerOptions">
+      <div class="optionOne" id="optionOne" draggable="true">
+        <img class="optionSelected" src="./assets/images/ow.svg" style="width: 80px" />
+      </div>
+      
+      <div class="optionTwo" id="optionTwo" draggable="true">
+        <img class="optionSelected" src="./assets/images/wow.svg" style="width: 80px" />
+      </div>
+      
+      <div class="optionThree" id="optionThree" draggable="true">
+        <img class="optionSelected" src="./assets/images/hots.png" style="width: 80px" />
+      </div>
+      
+      <div class="optionFour" id="optionFour" draggable="true">
+        <img class="optionSelected" src="./assets/images/hs.svg" style="width: 80px" />
+      </div>     
+
+    </div>
+    <!--Patrón Opciones D&D (\)-->
+
+    <!--Botón Siguiente (/)-->
+    <button class="nextTest" id="btnNext">Siguiente</button>
+    <!--Botón Siguiente (\)-->
+  </div>
+  <!--PAGE FORM-->
+  <div id="pageForm" style="display: none;">
+    <div class="containerForm">
+      <h1 style="font-size: 64px; font-weight: 200">Introduce tus datos</h1>
+
+      <h3 style="font-size: 32px; font-weight: 200">
+        para acceder a tu puntuación
+      </h3>
+
+      <form action="" method="get">
+        <label style="margin-right: 469px;font-size: 24px;">Nombre<span style="color: red;">*</span></label><br>
+        <input type="text" id="nameForm">
+        <br><br>
+        <label style="margin-right: 484px;font-size: 24px;">Email<span style="color: red;">*</span></label><br>
+        <input type="email" id="emailForm">
+
+
+      </form>
+    </div>
+    <div class="submitContainer">
+      <button type="submit" id="submitForm">Enviar</button>
+    </div>
+  </div>
+
+  <!--PAGE RESULTS  ▲ ▼-->
+  <div id="pageFinal" style="display: none;">
+    <div class="containerFinal">
+      <h1 style="font-size: 64px; font-weight: 200">Resultados</h1>
+
+      <h3 style="font-size: 32px; font-weight: 200">
+        Resultados globales de todos los jugadores
+      </h3>
+
+      <h4 class="playerName">Jugadores <span onclick="ordenarJugador()">▲</span>| <span>Tiempo <span>▲</span></span>
+      </h4>
+      <div class="containerPlayers">
+        <ul id="playerList">
+
+        </ul>
+      </div>
 
 
     </div>
 
-    <!--Modulos-->
-    <script type="module" src="main.js"></script>
 
-  </body>
+
+    <div class="submitContainer">
+      <button type="submit" id="newTest">Nuevo Test</button>
+    </div>
+
+
+
+  </div>
+
+  <!--Modulos-->
+  <script type="module" src="main.js"></script>
+
+</body>
+
 </html>
