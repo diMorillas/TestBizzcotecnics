@@ -39,6 +39,13 @@ label {
     font-weight: 300;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0; 
+    text-align: left;
+}
+
+
 /*Body*/
 
 @keyframes urgencyEffect {
@@ -307,4 +314,8 @@ label {
     margin-top: 130px;
     box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
 
+}
+
+#ordenarJugador{
+    cursor: pointer;
 }

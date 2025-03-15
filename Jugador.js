@@ -3,7 +3,7 @@ export class Jugador {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
-        this.time = time;
+        this.time = time; 
     }
 
     // Métodos de la clase

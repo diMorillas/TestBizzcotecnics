@@ -1,10 +1,12 @@
 import { Jugador } from './Jugador.js';
+import { ordenarJugadoresPorNombre } from './ordenarJugadores.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     let pageTest = document.getElementById('pageTest');
     let pageForm = document.getElementById('pageForm');
     let pageFinal = document.getElementById('pageFinal');
     let btnForm = document.getElementById('submitForm');
+    let playerList = document.getElementById('playerList'); // Obtener el elemento UL donde se mostrarán los jugadores
 
     console.log('Successfully Connected to JavaScript File');
 
@@ -104,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let idJugador = jugadores.length > 0 ? jugadores[jugadores.length - 1].id + 1 : 1;
         let tiempoTest = Math.floor((Date.now() - startTime) / 1000); // Calcular el tiempo transcurrido en segundos
 
-        let nuevoJugador = new Jugador(idJugador, nameForm, emailForm, tiempoTest); // Pasamos tiempoTest a la clase
+        let nuevoJugador = new Jugador(idJugador, nameForm, emailForm, tiempoTest); // Pasamos 'time' como argumento
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
@@ -112,13 +114,38 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Jugador añadido:", nuevoJugador);
         console.log("Jugadores actuales:", jugadores);
 
+        // Actualizamos la lista de jugadores en la interfaz
+        actualizarListaJugadores();
+
         pageForm.style.display = 'none';
         pageFinal.style.display = 'block';
     });
 
-    let jugadores = getJugadores(); 
-    jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    jugadores.forEach(element => {
-        console.log(element);
-    });
+    // Función para actualizar la lista de jugadores en el DOM
+    function actualizarListaJugadores() {
+        // Limpiar la lista actual
+        playerList.innerHTML = '';
+
+        // Obtener los jugadores almacenados
+        let jugadores = getJugadores();
+
+        // Ordenar jugadores por nombre
+        jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+        // Recorrer los jugadores y crear un <li> para cada uno
+        jugadores.forEach(jugador => {
+            let li = document.createElement('li');
+            li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
+            playerList.appendChild(li);
+        });
+    }
+
+    actualizarListaJugadores();
+
+    // Volver al test
+    let startAgain = document.getElementById('newTest');
+
+    
+
+
 });
