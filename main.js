@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Gestión de música
-    let music = document.getElementById('bg-music');
+    let music = document.getElementById('bg-musicc');
     const playMusic = () => {
         if (music) {
             music.play().catch(error => {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Cuenta regresiva
-    let timeRemaining = 999; // Segundos 
+    let timeRemaining = 9999; // Segundos 
     let countdown; // Declarar countdown fuera de la función
 
     const timeRemainingTest = () => {
