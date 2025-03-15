@@ -1,29 +1,30 @@
-
 export function initDragAndDrop() {
     const options = document.querySelectorAll('.optionSelected');
     const figureFour = document.querySelector('.figureFour');
   
     figureFour.addEventListener('dragover', (e) => {
-      e.preventDefault(); // Permite que el drop sea posible
+      e.preventDefault(); 
     });
   
     figureFour.addEventListener('drop', (e) => {
       e.preventDefault();
-      const draggedElement = document.querySelector('.dragging'); // Elemento arrastrado
+      const draggedElement = document.querySelector('.dragging'); 
   
       if (draggedElement) {
-                figureFour.appendChild(draggedElement);
-        draggedElement.classList.remove('dragging'); // Limpiar la clase de arrastre
+        figureFour.appendChild(draggedElement);
+        draggedElement.classList.remove('dragging'); 
+  
+        draggedElement.style.width = '160px'; 
       }
     });
   
     options.forEach(option => {
       option.addEventListener('dragstart', (e) => {
-        e.target.classList.add('dragging'); // Añadir clase para el elemento arrastrado
+        e.target.classList.add('dragging'); 
       });
   
       option.addEventListener('dragend', (e) => {
-        e.target.classList.remove('dragging'); // Eliminar la clase cuando termine el arrastre
+        e.target.classList.remove('dragging');
       });
     });
   }
