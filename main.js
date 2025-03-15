@@ -94,4 +94,28 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Elemento de número de test no encontrado');
     }
 
+    //Gestion Boton en el Form
+    let btnForm = document.getElementById('submitForm');
+
+    btnForm.addEventListener('click', () => {
+        let nameForm = document.getElementById('nameForm').value.trim();
+        let emailForm = document.getElementById('emailForm').value.trim();
+    
+        let nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+        if (!nameRegex.test(nameForm)) {
+            alert("El nombre solo puede contener letras y no puede estar vacío.");
+            return;
+        }
+    
+        if (!emailRegex.test(emailForm)) {
+            alert("Introduce un email válido con '@'.");
+            return;
+        }
+    
+        console.log("Nombre y email válidos:", nameForm, emailForm);
+    });
+    
+
 });
