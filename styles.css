@@ -308,7 +308,7 @@ ul {
 
 .containerPlayers{
     font-family: "Roboto Mono", monospace;
-    width: 268px;
+    width: 320px;
     height: 357px;
     background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
     border-radius: 10px;
@@ -317,6 +317,7 @@ ul {
     margin-left: 65px;
     margin-top: 130px;
     box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
+    padding-left: 20px;
 
 }
 
