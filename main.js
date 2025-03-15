@@ -1,3 +1,5 @@
+import { Jugador } from './Jugador.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // DOM básico
     let pageTest = document.getElementById('pageTest');
@@ -129,12 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Generar ID autoincremental
         let idJugador = jugadores.length > 0 ? jugadores[jugadores.length - 1].id + 1 : 1;
 
-        // Crear el nuevo jugador
-        let nuevoJugador = {
-            id: idJugador,
-            nombre: nameForm,
-            email: emailForm
-        };
+        // Crear el nuevo jugador utilizando la clase Jugador
+        let nuevoJugador = new Jugador(idJugador, nameForm, emailForm);
 
         // Añadir al array de jugadores
         jugadores.push(nuevoJugador);
