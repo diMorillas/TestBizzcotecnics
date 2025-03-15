@@ -200,7 +200,7 @@ label {
 .nextTest {
     font-family: "Roboto Mono", monospace;
     position: absolute;
-    top: 950px;
+    top: 800px;
     right: 30px;
     border: none;
     background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);

@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // DOM básico
     let pageTest = document.getElementById('pageTest');
     let pageForm = document.getElementById('pageForm');
+    let btnForm = document.getElementById('submitForm');
 
     // Testing conexión con archivo JavaScript
     console.log('Successfully Connected to JavaScript File');
@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     numberTest.innerHTML = "3/3";
                     nextTest.innerHTML = 'Finalizar'
 
-                    setInterval(()=>{
+                    setInterval(() => {
                         pageTest.style.display = 'none';
                         clearInterval(countdown); // Detener la cuenta regresiva
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
-                        //pageForm.style.display ='block';
-                    },500)
+                        pageForm.style.display = 'block';
+                    }, 500)
                 } else {
                     pageTest.style.display = 'block';
                 }
@@ -94,28 +94,57 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Elemento de número de test no encontrado');
     }
 
-    //Gestion Boton en el Form
-    let btnForm = document.getElementById('submitForm');
+    // Funciones para almacenar y recuperar jugadores en LocalStorage
+    function getJugadores() {
+        return JSON.parse(localStorage.getItem("jugadores")) || [];
+    }
 
+    function guardarJugadores(jugadores) {
+        localStorage.setItem("jugadores", JSON.stringify(jugadores));
+    }
+
+    // Gestion de Boton en el Formulario
     btnForm.addEventListener('click', () => {
         let nameForm = document.getElementById('nameForm').value.trim();
         let emailForm = document.getElementById('emailForm').value.trim();
-    
+
         let nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
         let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
+        // Validar nombre
         if (!nameRegex.test(nameForm)) {
             alert("El nombre solo puede contener letras y no puede estar vacío.");
             return;
         }
-    
+
+        // Validar email
         if (!emailRegex.test(emailForm)) {
             alert("Introduce un email válido con '@'.");
             return;
         }
-    
-        console.log("Nombre y email válidos:", nameForm, emailForm);
+
+        // Obtener jugadores actuales
+        let jugadores = getJugadores();
+
+        // Generar ID autoincremental
+        let idJugador = jugadores.length > 0 ? jugadores[jugadores.length - 1].id + 1 : 1;
+
+        // Crear el nuevo jugador
+        let nuevoJugador = {
+            id: idJugador,
+            nombre: nameForm,
+            email: emailForm
+        };
+
+        // Añadir al array de jugadores
+        jugadores.push(nuevoJugador);
+
+        // Guardar en LocalStorage
+        guardarJugadores(jugadores);
+
+        // Log para verificar
+        console.log("Jugador añadido:", nuevoJugador);
+        console.log("Jugadores actuales:", jugadores);
     });
-    
 
 });
