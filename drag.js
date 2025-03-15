@@ -1,5 +1,6 @@
 // drag.js
 export function initDragAndDrop() {
+    console.log('Succesfully Connected to drag.js')
     const options = document.querySelectorAll('.optionSelected');
     const figureFour = document.querySelector('.figureFour');
   

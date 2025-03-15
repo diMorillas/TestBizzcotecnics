@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let btnForm = document.getElementById('submitForm');
     let playerList = document.getElementById('playerList'); // Obtener el elemento UL donde se mostrarán los jugadores
 
-    console.log('Successfully Connected to JavaScript File');
+    console.log('Succesfully Connected to main.js')
 
     let music = document.getElementById('bg-musicc');
     const playMusic = () => {
