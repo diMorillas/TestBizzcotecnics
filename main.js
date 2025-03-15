@@ -144,8 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Volver al test
     let startAgain = document.getElementById('newTest');
+    startAgain.addEventListener('click', () => {
+        location.reload();
+    });
 
-    
 
 
 });
