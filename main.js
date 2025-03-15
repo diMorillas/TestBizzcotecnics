@@ -127,25 +127,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Función para actualizar la lista de jugadores en el DOM
+    let arrowName = true;
+    let signOrder = document.getElementById('signOrder');
+    
     function actualizarListaJugadores() {
-        // Limpiar la lista actual
         playerList.innerHTML = '';
-
-        // Obtener los jugadores almacenados
+    
         let jugadores = getJugadores();
-
-        // Ordenar jugadores por nombre
-        jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
-        // Recorrer los jugadores y crear un <li> para cada uno
-        jugadores.forEach(jugador => {
-            let li = document.createElement('li');
-            li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
-            playerList.appendChild(li);
-        });
+    
+        if (arrowName) {
+            jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Orden ascendente
+    
+            jugadores.forEach(jugador => {
+                let li = document.createElement('li');
+                li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
+                playerList.appendChild(li);
+            });
+        } else {
+            jugadores.sort((a, b) => b.nombre.localeCompare(a.nombre)); // Orden descendente
+    
+            jugadores.forEach(jugador => {
+                let li = document.createElement('li');
+                li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
+                playerList.appendChild(li);
+            });
+        }
     }
+    
+    signOrder.addEventListener('click', () => {
+        arrowName = !arrowName; 
+    
 
+        signOrder.innerHTML = arrowName ? '▲' : '▼';
+    
+
+        actualizarListaJugadores();
+    });
+    
     actualizarListaJugadores();
+
 
     // Volver al test
     let startAgain = document.getElementById('newTest');
