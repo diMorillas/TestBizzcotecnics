@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM básico
     let pageTest = document.getElementById('pageTest');
     let pageForm = document.getElementById('pageForm');
+    let pageFinal = document.getElementById('pageFinal');
     let btnForm = document.getElementById('submitForm');
 
     // Testing conexión con archivo JavaScript
@@ -69,24 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
         let nextTest = document.getElementById('btnNext');
         if (nextTest) {
             nextTest.addEventListener('click', () => {
-                testCounter <= 3 ? testCounter++ : console.error('Máximos test por jugador alcanzado');
-                numberTest.innerHTML = `${testCounter}/3`;
-
-                // Gestión de SPA (se evalúa cada vez que cambia el contador)
-                testCounter == 3 ? nextTest.innerHTML = 'Finalizar' : nextTest.innerHTML = 'Siguiente';
-
-                if (testCounter == 4) {
+                if (testCounter < 3) {
+                    testCounter++;
+                    numberTest.innerHTML = `${testCounter}/3`;
+                    nextTest.innerHTML = testCounter === 3 ? 'Finalizar' : 'Siguiente';
+                } else {
                     numberTest.innerHTML = "3/3";
-                    nextTest.innerHTML = 'Finalizar'
+                    nextTest.innerHTML = 'Finalizar';
 
-                    setInterval(() => {
+                    setTimeout(() => {
                         pageTest.style.display = 'none';
                         clearInterval(countdown); // Detener la cuenta regresiva
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
                         pageForm.style.display = 'block';
-                    }, 500)
-                } else {
-                    pageTest.style.display = 'block';
+                    }, 500);
                 }
             });
         } else {
@@ -105,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem("jugadores", JSON.stringify(jugadores));
     }
 
-    // Gestion de Boton en el Formulario
+    // Gestión de Botón en el Formulario
     btnForm.addEventListener('click', () => {
         let nameForm = document.getElementById('nameForm').value.trim();
         let emailForm = document.getElementById('emailForm').value.trim();
@@ -143,6 +140,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Log para verificar
         console.log("Jugador añadido:", nuevoJugador);
         console.log("Jugadores actuales:", jugadores);
+
+        // Gestión de página final
+        pageForm.style.display = 'none';
+        pageFinal.style.display = 'block';
+    });
+
+    // Lista de jugadores
+    let jugadores = getJugadores(); 
+
+    // Ordenar jugadores por nombre (por ejemplo)
+    jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    
+    jugadores.forEach(element => {
+        console.log('eyyy');
+        console.log(element); 
     });
 
 });
