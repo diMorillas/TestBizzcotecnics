@@ -1,9 +1,8 @@
 // main.js
 
-import { Jugador } from './Jugador.js';
+import { actualizarMedia, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
-import { media } from './functions.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos del DOM
@@ -18,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-musicc');
+    const mediaTime = document.getElementById('media');
+    
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
     let arrowTime = true;
@@ -111,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Jugador añadido:", nuevoJugador);
         console.log("Jugadores actuales:", jugadores);
 
-        // Actualizamos la lista de jugadores en la interfaz
-        actualizarListaJugadores();
+        actualizarListaJugadores(); // Refrescar la lista
+        actualizarMedia(jugadores); // Actualizar la media de tiempos después de añadir un jugador
 
         pageForm.style.display = 'none';
         pageFinal.style.display = 'block';
@@ -120,9 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para actualizar la lista de jugadores en el DOM
     function actualizarListaJugadores() {
-        playerList.innerHTML = '';
-
         const jugadores = getJugadores();
+        playerList.innerHTML = '';
 
         // Orden por tiempo
         if (arrowTime) {
@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
             li.textContent = `${jugador.nombre.toUpperCase()}       ${jugador.time} SEGUNDOS`;
             playerList.appendChild(li);
         });
+
+        // Actualizar la media de tiempos
+        actualizarMedia(jugadores);
     }
 
     // Orden por tiempo
@@ -144,6 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
         signTime.innerHTML = arrowTime ? '▲' : '▼';
         actualizarListaJugadores();
     });
+
+    //Media tiempo
+    actualizarMedia(getJugadores());
 
     actualizarListaJugadores();
 
