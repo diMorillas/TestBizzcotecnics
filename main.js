@@ -128,43 +128,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para actualizar la lista de jugadores en el DOM
     let arrowName = true;
+    let arrowTime = true; // Variable para controlar el orden del tiempo
     let signOrder = document.getElementById('signOrder');
+    let signTime = document.getElementById('signTime');
     
     function actualizarListaJugadores() {
         playerList.innerHTML = '';
     
         let jugadores = getJugadores();
     
+        // Orden por nombre
         if (arrowName) {
-            jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Orden ascendente
-    
-            jugadores.forEach(jugador => {
-                let li = document.createElement('li');
-                li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
-                playerList.appendChild(li);
-            });
+            jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Orden ascendente por nombre
         } else {
-            jugadores.sort((a, b) => b.nombre.localeCompare(a.nombre)); // Orden descendente
-    
-            jugadores.forEach(jugador => {
-                let li = document.createElement('li');
-                li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
-                playerList.appendChild(li);
-            });
+            jugadores.sort((a, b) => b.nombre.localeCompare(a.nombre)); // Orden descendente por nombre
         }
+    
+        // Orden por tiempo
+        if (arrowTime) {
+            jugadores.sort((a, b) => a.time - b.time); // Orden ascendente por tiempo
+        } else {
+            jugadores.sort((a, b) => b.time - a.time); // Orden descendente por tiempo
+        }
+    
+        jugadores.forEach(jugador => {
+            let li = document.createElement('li');
+            li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
+            playerList.appendChild(li);
+        });
     }
     
+    // Orden por nombre
     signOrder.addEventListener('click', () => {
         arrowName = !arrowName; 
-    
-
-        signOrder.innerHTML = arrowName ? '▲' : '▼';
-    
-
-        actualizarListaJugadores();
+        signOrder.innerHTML = arrowName ? '▲' : '▼'; 
+        actualizarListaJugadores(); 
     });
     
+    // Orden por tiempo
+    signTime.addEventListener('click', () => {
+        arrowTime = !arrowTime; 
+        signTime.innerHTML = arrowTime ? '▲' : '▼'; 
+        actualizarListaJugadores(); 
+    });
+    
+
     actualizarListaJugadores();
+    
 
 
     // Volver al test
