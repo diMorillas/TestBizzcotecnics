@@ -17,7 +17,7 @@
 <body>
   <audio src="./assets/music/bg-sound.mp3" id="bg-music" preload="auto"></audio>
   <!--PAGE TEST-->
-  <div id="pageTest">
+  <div id="pageTest" style="display: none;">
     <!--Número de test (/)-->
     <div id="counterContainer">
       <span id="testCounter" class="o-100">1/3</span>
@@ -61,18 +61,18 @@
       <div class="optionOne" id="optionOne" draggable="true">
         <img class="optionSelected" src="./assets/images/ow.svg" style="width: 80px" />
       </div>
-      
+
       <div class="optionTwo" id="optionTwo" draggable="true">
         <img class="optionSelected" src="./assets/images/wow.svg" style="width: 80px" />
       </div>
-      
+
       <div class="optionThree" id="optionThree" draggable="true">
         <img class="optionSelected" src="./assets/images/hots.png" style="width: 80px" />
       </div>
-      
+
       <div class="optionFour" id="optionFour" draggable="true">
         <img class="optionSelected" src="./assets/images/hs.svg" style="width: 80px" />
-      </div>     
+      </div>
 
     </div>
     <!--Patrón Opciones D&D (\)-->
@@ -106,7 +106,7 @@
   </div>
 
   <!--PAGE RESULTS  ▲ ▼-->
-  <div id="pageFinal" style="display: none;">
+  <div id="pageFinal" style="display: block;">
     <div class="containerFinal">
       <h1 style="font-size: 64px; font-weight: 200">Resultados</h1>
 
@@ -114,14 +114,45 @@
         Resultados globales de todos los jugadores
       </h3>
 
-      <h4 class="playerName">Jugadores  <span>Tiempo <span id="signTime" style="cursor: pointer;">▲</span></span></h4>
-    </h4>
+      <h4 class="playerName">Jugadores <span>Tiempo <span id="signTime" style="cursor: pointer;">▲</span></span></h4>
+      </h4>
       <div class="containerPlayers">
         <ul id="playerList">
 
         </ul>
       </div>
 
+      <h4 class="playersTimes">Mejores tiempos</h4>
+      </h4>
+      <div class="containerTimes">
+        <ul id="playerList">
+
+        </ul>
+      </div>
+
+      <h4 class="playerPoints">Puntuacion</h4>
+    </h4>
+    <div class="containerPoints">
+      <ul id="playerList">
+
+      </ul>
+    </div>
+
+    <h4 class="pointsMedia">Media</h4>
+  </h4>
+  <div class="containerPointMedia">
+    <ul id="playerList">
+
+    </ul>
+  </div>
+
+  <h4 class="timeMedia">Media tiempo</h4>
+</h4>
+<div class="containerTimeMedia">
+  <ul id="playerList">
+
+  </ul>
+</div>
 
     </div>
 

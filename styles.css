@@ -306,6 +306,42 @@ ul {
 
 }
 
+.playersTimes{
+    position: absolute;
+    margin-top: 90px;
+    margin-left: 428px;
+    color: white;
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+}
+
+.playerPoints{
+    position: absolute;
+    margin-top: 90px;
+    margin-left: 788px;
+    color: white;
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+}
+
+.pointsMedia{
+    position: absolute;
+    margin-top: 90px;
+    margin-left: 1002px;
+    color: white;
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+}
+
+.timeMedia{
+    position: absolute;
+    margin-top: 302px;
+    margin-left: 788px;
+    color: white;
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+}
+
 .containerPlayers{
     font-family: "Roboto Mono", monospace;
     width: 320px;
@@ -319,6 +355,63 @@ ul {
     box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
     padding-left: 20px;
 
+}
+
+.containerTimes{
+    font-family: "Roboto Mono", monospace;
+    width: 320px;
+    height: 357px;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    margin-left: 425px;
+    margin-top: 130px;
+    box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
+    padding-left: 20px;
+
+}
+
+.containerPoints{
+    font-family: "Roboto Mono", monospace;
+    width: 201px;
+    height: 142px;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    margin-left: 783px;
+    margin-top: 130px;
+    box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
+    padding-left: 20px;
+}
+
+.containerPointMedia{
+    font-family: "Roboto Mono", monospace;
+    width: 201px;
+    height: 142px;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    margin-left: 1000px;
+    margin-top: 130px;
+    box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
+    padding-left: 20px;
+}
+
+.containerTimeMedia{
+    font-family: "Roboto Mono", monospace;
+    width: 419px;
+    height: 142px;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    margin-left: 783px;
+    margin-top: 345px;
+    box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
+    padding-left: 20px;
 }
 
 #ordenarJugador{
