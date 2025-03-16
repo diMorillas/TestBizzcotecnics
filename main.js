@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Función para actualizar la lista de jugadores en el DOM
-    let arrowName = true;
+    let arrowName = true; // Variable para controlar el orden del nombre
     let arrowTime = true; // Variable para controlar el orden del tiempo
     let signOrder = document.getElementById('signOrder');
     let signTime = document.getElementById('signTime');
@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarListaJugadores(); 
     });
     
-
     actualizarListaJugadores();
+    
     
 
 
