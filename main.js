@@ -1,6 +1,6 @@
 // main.js
 
-import { actualizarMedia, Jugador } from './Jugador.js';
+import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-musicc');
-    const mediaTime = document.getElementById('media');
+    const bestTimes = document.getElementById('playerBestTimes');
     
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         actualizarListaJugadores(); // Refrescar la lista
         actualizarMedia(jugadores); // Actualizar la media de tiempos después de añadir un jugador
+        mostrarMejoresTiempos(jugadores);
 
         pageForm.style.display = 'none';
         pageFinal.style.display = 'block';
