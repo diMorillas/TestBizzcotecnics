@@ -4,7 +4,6 @@ import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos del DOM
-    let modal = document.getElementById('modal');
     let acceptButton = document.getElementById('acceptButton');
     let pageTest = document.getElementById('pageTest');
     let pageForm = document.getElementById('pageForm');
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let startAgain = document.getElementById('newTest');
     let signTime = document.getElementById('signTime');
     let timer = document.getElementById('timer');
-    let music = document.getElementById('bg-musicc');
+    let music = document.getElementById('bg-music');
     let timeRemaining = 9999;
     let countdown;
     let startTime = Date.now(); // Guardamos el tiempo de inicio

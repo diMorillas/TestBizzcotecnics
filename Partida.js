@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM básico
+  
     let pageTest = document.getElementById('pageTest');
-    let pageForm = document.getElementById('pageForm');
     let btnForm = document.getElementById('submitForm');
 
     // Testing conexión con archivo JavaScript
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestión de eventos en el body
     document.body.addEventListener('click', () => {
         playMusic();
+        console.log('Succesfully Connected to Partida.js');
     });
 
     // Gestión de música
@@ -96,10 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // **Clase Jugador** con constructor para crear instancias
     class Jugador {
-        constructor(id, nombre, email) {
+        constructor(id, nombre, email, tiempo) {
             this.id = id;
             this.nombre = nombre;
             this.email = email;
+            this.tiempo = tiempo;
         }
     }
 

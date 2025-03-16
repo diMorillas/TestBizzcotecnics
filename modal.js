@@ -1,6 +1,7 @@
 // Función para mostrar el modal
 export function mostrarModal() {
     modal.style.display = 'flex'; // Muestra el modal
+    console.log('Succesfully Connected to modal.js');
 }
 
 // Función que ejecutará después de aceptar el modal
