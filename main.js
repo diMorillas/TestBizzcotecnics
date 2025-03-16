@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', playMusic);
 
     // Control del contador de tests
+    let tiempoFinal;  // Esta variable almacenará el tiempo final cuando termine el test
     if (numberTest) {
         let testCounter = 1;
         numberTest.innerHTML = `${testCounter}/3`;
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     numberTest.innerHTML = "3/3";
                     nextTest.innerHTML = 'Finalizar';
+                    tiempoFinal = Date.now(); // Guardamos el tiempo exacto cuando se finaliza el test
 
                     setTimeout(() => {
                         pageTest.style.display = 'none';
@@ -102,7 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const jugadores = getJugadores();
         const idJugador = jugadores.length > 0 ? jugadores[jugadores.length - 1].id + 1 : 1;
-        const tiempoTest = Math.floor((Date.now() - startTime) / 1000); // Calcular el tiempo transcurrido en segundos
+
+        // Calcular el tiempo transcurrido en segundos
+        const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
 
         const nuevoJugador = new Jugador(idJugador, nameForm, emailForm, tiempoTest);
 
