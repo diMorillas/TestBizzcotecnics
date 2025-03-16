@@ -3,6 +3,7 @@
 import { Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
+import { media } from './functions.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos del DOM
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextTest = document.getElementById('btnNext');
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
-    const music = document.getElementById('bg-music');
+    const music = document.getElementById('bg-musicc');
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
     let arrowTime = true;
