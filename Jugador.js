@@ -23,5 +23,5 @@ export function actualizarMedia(jugadores) {
     
     const tiempos = jugadores.map(jugador => jugador.time); // Extraer tiempos
     const mediaTiempo = media(tiempos); // Calcular media
-    document.getElementById("media").textContent = mediaTiempo.toFixed(2) + " segundos"; // Mostrar con 2 decimales
+    document.getElementById("media").textContent = mediaTiempo.toFixed(0) + " segundos"; // Mostrar con 2 decimales
 }

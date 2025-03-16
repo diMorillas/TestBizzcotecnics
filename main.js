@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         jugadores.forEach(jugador => {
             const li = document.createElement('li');
-            li.textContent = `${jugador.nombre.toUpperCase()}       ${jugador.time} SEGUNDOS`;
+            li.textContent = `${jugador.nombre.toLowerCase()}       ${jugador.time} segundos`;
             playerList.appendChild(li);
         });
 

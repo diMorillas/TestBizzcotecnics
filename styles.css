@@ -452,8 +452,17 @@ ul {
     margin-top: 345px;
     box-shadow: 2px 2px 400px 16px rgb(95, 93, 95);
     padding-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #ordenarJugador{
     cursor: pointer;
+}
+
+#media{
+    text-align: center;
+    margin-right: 17px;
+    font-size: 48px;
 }
