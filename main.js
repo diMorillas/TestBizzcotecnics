@@ -1,4 +1,4 @@
-import { Jugador } from './Jugador.js';
+import { Jugador} from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 
 
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let pageForm = document.getElementById('pageForm');
     let pageFinal = document.getElementById('pageFinal');
     let btnForm = document.getElementById('submitForm');
-    let playerList = document.getElementById('playerList'); // Obtener el elemento UL donde se mostrarán los jugadores
+    let playerList = document.getElementById('playerList');
 
     console.log('Succesfully Connected to main.js')
 
