@@ -86,6 +86,46 @@ ul {
     opacity: 100%;
 }
 
+#modal {
+    display: none;
+    background-color: black;
+}
+
+#acceptButton{
+    font-family: "Roboto Mono", monospace;
+
+    border: none;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    padding: 10px 10px;
+    font-weight: 400;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#acceptButton:hover{
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+
+}
+
+
+
+/*Pagina Normas*/
+#text {
+    font-size: 24px;
+    text-align: center;
+    opacity: 0; /* Inicialmente oculto */
+    transition: opacity 2s ease-in-out; /* Transición de opacidad */
+}
+
+#textContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
 /* Contador Tests */
 #counterContainer {
     width: 192px;
