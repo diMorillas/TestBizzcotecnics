@@ -1,5 +1,4 @@
 import { Jugador } from './Jugador.js';
-//import { ordenarJugadoresPorNombre } from './ordenarJugadores.js';
 import { initDragAndDrop } from './drag.js';
 
 
@@ -127,22 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Función para actualizar la lista de jugadores en el DOM
-    let arrowName = true; // Variable para controlar el orden del nombre
-    let arrowTime = true; // Variable para controlar el orden del tiempo
-    let signOrder = document.getElementById('signOrder');
+    let arrowTime = true; 
     let signTime = document.getElementById('signTime');
     
     function actualizarListaJugadores() {
         playerList.innerHTML = '';
     
         let jugadores = getJugadores();
-    
-        // Orden por nombre
-        if (arrowName) {
-            jugadores.sort((a, b) => a.nombre.localeCompare(b.nombre)); // Orden ascendente por nombre
-        } else {
-            jugadores.sort((a, b) => b.nombre.localeCompare(a.nombre)); // Orden descendente por nombre
-        }
     
         // Orden por tiempo
         if (arrowTime) {
@@ -153,17 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
         jugadores.forEach(jugador => {
             let li = document.createElement('li');
-            li.textContent = `${jugador.nombre}   |    ${jugador.time} segundos`;
+            li.textContent = `${jugador.nombre}       ${jugador.time} segundos`;
             playerList.appendChild(li);
         });
     }
-    
-    // Orden por nombre
-    signOrder.addEventListener('click', () => {
-        arrowName = !arrowName; 
-        signOrder.innerHTML = arrowName ? '▲' : '▼'; 
-        actualizarListaJugadores(); 
-    });
     
     // Orden por tiempo
     signTime.addEventListener('click', () => {
@@ -173,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     actualizarListaJugadores();
+    
     
     
 
