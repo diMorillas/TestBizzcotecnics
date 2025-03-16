@@ -1,11 +1,24 @@
+// modal.js
+
 // Función para mostrar el modal
 export function mostrarModal() {
+    const modal = document.getElementById('modal');
+    if (!modal) {
+        console.error('Elemento modal no encontrado');
+        return;
+    }
     modal.style.display = 'flex'; // Muestra el modal
-    console.log('Succesfully Connected to modal.js');
+    console.log('Successfully Connected to modal.js');
 }
 
 // Función que ejecutará después de aceptar el modal
 export function iniciarTest() {
+    const modal = document.getElementById('modal');
+    const pageTest = document.getElementById('pageTest');
+    if (!modal || !pageTest) {
+        console.error('No se encontraron elementos necesarios (modal o pageTest)');
+        return;
+    }
     modal.style.display = 'none'; // Oculta el modal
     pageTest.style.display = 'block'; // Muestra el div del test
     pageTest.style.opacity = '0'; // Establece la opacidad inicial
@@ -16,17 +29,14 @@ export function iniciarTest() {
         pageTest.style.transition = 'opacity 2s'; // Aplica la transición suave de opacidad
         pageTest.style.opacity = '1'; // Cambia la opacidad a 1
     }, 500);
-
-    // Llamar a la función del temporizador después de iniciar el test
-    timeRemainingTest(); // Aquí invocamos la función del temporizador
+    // Nota: La función timeRemainingTest() se invocará desde main.js para poder almacenar el ID del intervalo.
 }
 
 // Función para manejar el temporizador
-export function timeRemainingTest() {
-    let timeRemaining = 9999;  // Define el tiempo inicial, por ejemplo, 9999 segundos
+export function timeRemainingTest(timeRemaining = 35) {
     let countdown;  // Declaramos la variable countdown
 
-    // Asegúrate de que el elemento 'timer' exista en el DOM
+    // Aseguramos que el elemento 'timer' exista en el DOM
     let timer = document.getElementById('timer');
     if (!timer) {
         console.error('Elemento de timer no encontrado');
@@ -48,7 +58,7 @@ export function timeRemainingTest() {
             document.body.classList.remove('timeout');
         }
 
-        // Si el tiempo llega a cero, parar el contador y recargar la página
+        // Si el tiempo llega a cero, detener el contador y recargar la página
         if (timeRemaining <= 0) {
             clearInterval(countdown);
             console.log('Cuenta regresiva terminada por límite de tiempo');
@@ -56,4 +66,6 @@ export function timeRemainingTest() {
             location.reload();
         }
     }, 1000);  // Actualiza cada segundo
+
+    return countdown; // Retornamos el ID del intervalo para poder limpiarlo externamente
 }

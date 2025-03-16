@@ -1,23 +1,23 @@
+// main.js
+
 import { Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos del DOM
-    let acceptButton = document.getElementById('acceptButton');
-    let pageTest = document.getElementById('pageTest');
-    let pageForm = document.getElementById('pageForm');
-    let pageFinal = document.getElementById('pageFinal');
-    let btnForm = document.getElementById('submitForm');
-    let playerList = document.getElementById('playerList');
-    let numberTest = document.getElementById('testCounter');
-    let nextTest = document.getElementById('btnNext');
-    let startAgain = document.getElementById('newTest');
-    let signTime = document.getElementById('signTime');
-    let timer = document.getElementById('timer');
-    let music = document.getElementById('bg-music');
-    let timeRemaining = 9999;
-    let countdown;
+    const acceptButton = document.getElementById('acceptButton');
+    const pageTest = document.getElementById('pageTest');
+    const pageForm = document.getElementById('pageForm');
+    const pageFinal = document.getElementById('pageFinal');
+    const btnForm = document.getElementById('submitForm');
+    const playerList = document.getElementById('playerList');
+    const numberTest = document.getElementById('testCounter');
+    const nextTest = document.getElementById('btnNext');
+    const startAgain = document.getElementById('newTest');
+    const signTime = document.getElementById('signTime');
+    const music = document.getElementById('bg-music');
+    let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
     let arrowTime = true;
 
@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Al hacer clic en el botón de aceptación, iniciamos el test
     acceptButton.addEventListener('click', () => {
-        iniciarTest();  // Ocultamos el modal y mostramos la página de test
-        timeRemainingTest();  // Iniciamos el temporizador después de iniciar el test
+        iniciarTest();  // Oculta el modal y muestra la página de test
+        countdown = timeRemainingTest();  // Inicia el temporizador y almacena el ID del intervalo
     });
 
     mostrarModal();  // Muestra el modal cuando se carga la página
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     setTimeout(() => {
                         pageTest.style.display = 'none';
-                        clearInterval(countdown);
+                        clearInterval(countdown);  // Limpiar el temporizador
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
                         pageForm.style.display = 'block';
                     }, 500);
@@ -83,11 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Guardar el nuevo jugador y actualizar la lista
     btnForm.addEventListener('click', () => {
-        let nameForm = document.getElementById('nameForm').value.trim();
-        let emailForm = document.getElementById('emailForm').value.trim();
+        const nameForm = document.getElementById('nameForm').value.trim();
+        const emailForm = document.getElementById('emailForm').value.trim();
 
-        let nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
-        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!nameRegex.test(nameForm)) {
             alert("El nombre solo puede contener letras y no puede estar vacío.");
@@ -98,11 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let jugadores = getJugadores();
-        let idJugador = jugadores.length > 0 ? jugadores[jugadores.length - 1].id + 1 : 1;
-        let tiempoTest = Math.floor((Date.now() - startTime) / 1000); // Calcular el tiempo transcurrido en segundos
+        const jugadores = getJugadores();
+        const idJugador = jugadores.length > 0 ? jugadores[jugadores.length - 1].id + 1 : 1;
+        const tiempoTest = Math.floor((Date.now() - startTime) / 1000); // Calcular el tiempo transcurrido en segundos
 
-        let nuevoJugador = new Jugador(idJugador, nameForm, emailForm, tiempoTest); // Pasamos 'time' como argumento
+        const nuevoJugador = new Jugador(idJugador, nameForm, emailForm, tiempoTest);
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function actualizarListaJugadores() {
         playerList.innerHTML = '';
 
-        let jugadores = getJugadores();
+        const jugadores = getJugadores();
 
         // Orden por tiempo
         if (arrowTime) {
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         jugadores.forEach(jugador => {
-            let li = document.createElement('li');
+            const li = document.createElement('li');
             li.textContent = `${jugador.nombre.toUpperCase()}       ${jugador.time} SEGUNDOS`;
             playerList.appendChild(li);
         });
@@ -151,5 +151,5 @@ document.addEventListener('DOMContentLoaded', () => {
         location.reload();
     });
 
-    console.log('Succesfully Connected to main.js');
+    console.log('Successfully Connected to main.js');
 });
