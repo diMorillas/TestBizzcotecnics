@@ -31,12 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     mostrarModal();  // Muestra el modal cuando se carga la página
 
-    // Función para reproducir la música al hacer click en el cuerpo
     const playMusic = () => {
         if (music) {
             music.play().catch(error => console.error('Error al intentar reproducir la música:', error));
+            localStorage.setItem('isMusicPlaying', 'true'); 
         }
     };
+
+    // Reproducir música si estaba activa al recargar
+    if (localStorage.getItem('isMusicPlaying') === 'true' && music) {
+        music.play().catch(error => console.error('Error al intentar reproducir la música:', error));
+    }
+
     document.body.addEventListener('click', playMusic);
 
     // Control del contador de tests
