@@ -1,9 +1,6 @@
 import { Jugador} from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     initDragAndDrop();
     let pageTest = document.getElementById('pageTest');
@@ -50,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (timeRemaining <= 0) {
                 clearInterval(countdown);
                 console.log('Cuenta regresiva terminada por límite de tiempo');
+                alert('No superado');
+                location.reload();
             }
         }, 1000);
     }
