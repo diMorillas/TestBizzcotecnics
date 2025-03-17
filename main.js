@@ -1,5 +1,3 @@
-// main.js
-
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
@@ -16,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextTest = document.getElementById('btnNext');
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
-    const music = document.getElementById('bg-musicc');
+    const music = document.getElementById('bg-music');
     const bestTimes = document.getElementById('playerBestTimes');
     
     let countdown; // Variable para almacenar el intervalo del temporizador

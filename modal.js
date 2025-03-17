@@ -33,6 +33,10 @@ export function iniciarTest() {
 }
 
 // Función para manejar el temporizador
+/**
+ * @param {*} timeRemaining iniciado en 35 por defecto
+ * @returns countdown. Retornamos el ID del intérvalo para limpiarlo externamente.
+ */
 export function timeRemainingTest(timeRemaining = 35) {
     let countdown;  // Declaramos la variable countdown
 
@@ -42,6 +46,10 @@ export function timeRemainingTest(timeRemaining = 35) {
         console.error('Elemento de timer no encontrado');
         return;
     }
+
+    /**
+     * Iniciamos el intérvalo
+     */
 
     countdown = setInterval(() => {
         timeRemaining--;  // Decrementamos el tiempo
