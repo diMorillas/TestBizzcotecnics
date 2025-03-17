@@ -40,7 +40,7 @@ const openDB = async () => {
 };
 
 // Definimos un objeto con las operaciones permitidas
-const operaciones = {
+export const operaciones = {
     addTest: (store, data) => store.add(data),
     updateTest: (store, data) => store.put(data),
     deleteTest: (store, data) => store.delete(data),
@@ -48,11 +48,10 @@ const operaciones = {
     getAllTests: (store) => store.getAll(),
 };
 
-// Función de acceso dinámico con `new Function()`
 export const indexedDbManager = async (operation, data = null) => {
     try {
         console.log("he entrado en la función");
-        db = await openDB();
+        const db = await openDB();
         
         return new Promise((resolve, reject) => {
             const transaction = db.transaction(STORE_NAME, "readwrite");
@@ -63,15 +62,23 @@ export const indexedDbManager = async (operation, data = null) => {
                 return;
             }
 
-            // Creamos la función dinámicamente con `new Function()`
-            const fn = new Function("store", "data", `return operaciones['${operation}'](store, data);`);
-            const request = fn(store, data);
+            // Pasamos 'operaciones' explícitamente a la función dinámica
+            const fn = new Function("store", "data", "operaciones", `
+                return operaciones['${operation}'](store, data);
+            `);
+            
+            const request = fn(store, data, operaciones);  // Pasamos 'operaciones' aquí
 
-            request.onsuccess = () => resolve(request.result || "Operación completada");
-            request.onerror = () => reject("Error en la operación: " + request.error);
+            request.onsuccess = () => {
+                resolve(request.result || "Operación completada");
+            };
+            request.onerror = () => {
+                reject("Error en la operación: " + request.error);
+            };
         });
     } catch (error) {
-        console.error(error);
+        console.error("Error en indexedDbManager:", error);
         return "Error en la operación";
     }
 };
+

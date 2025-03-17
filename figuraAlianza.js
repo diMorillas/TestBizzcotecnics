@@ -7,3 +7,4 @@ export class figuraAlianza extends Figura {
     }
 
 }
+

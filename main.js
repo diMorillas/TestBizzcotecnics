@@ -3,7 +3,7 @@
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
-import { indexedDbManager } from './indexedDbManager.js';
+import { indexedDbManager,operaciones } from './indexedDbManager.js';
 import { Test } from "./test.js";
 import { Figura } from "./figura.js";
 import { figuraAlianza } from "./figuraAlianza.js";
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasTest = async () => {
         try {
             const tests = await indexedDbManager("getAllTests");
+            console.log(tests);
             
             // Comprobamos si hay tests
             if (tests && tests.length > 0) {
