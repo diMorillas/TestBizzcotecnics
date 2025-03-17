@@ -7,7 +7,7 @@ export class Persona {
         this.email = email;
     }
 
-    crearJugador(puntuacio) {
+    crearJugador(tiempo,puntuacio) {
         throw new Error("Método abstracto 'crearJugador' debe ser implementado");
     }
 }
@@ -19,8 +19,8 @@ export class Jugador extends Persona {
         this.puntuacio = puntuacio;
     }
 
-    crearJugador(puntuacio) {
-        return new Jugador(this.idPersona, this.nom, this.email, puntuacio);
+    crearJugador(tiempo,puntuacio) {
+        return new Jugador( this.nom, this.email,tiempo, puntuacio);
     }
 
     getPuntuacio() {
