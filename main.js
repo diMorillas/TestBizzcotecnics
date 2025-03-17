@@ -1,6 +1,48 @@
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
+import { indexedDbManager } from './indexedDbManager';  // Ajusta la ruta si es necesario
+
+
+const getRandomTests = (tests) => {
+    const randomIndexes = [];
+    while (randomIndexes.length < 4) {
+        const randomIndex = Math.floor(Math.random() * tests.length);
+        if (!randomIndexes.includes(randomIndex)) {
+            randomIndexes.push(randomIndex);
+        }
+    }
+    return randomIndexes.map(index => tests[index]);
+};
+
+const hasTest = async () => {
+    try {
+        const tests = await indexedDbManager("getAllTests");
+        
+        // Comprobamos si hay tests
+        if (tests && tests.length > 0) {
+            // Aquí obtienes tests aleatorios
+            const randomTests = getRandomTests(tests);
+            console.log("Tests seleccionados para la partida:", randomTests);
+            return randomTests;  // Regresamos los tests aleatorios seleccionados
+        } else {
+            console.log("No hay tests disponibles.");
+            return null;  // Retornamos null si no hay tests
+        }
+    } catch (error) {
+        console.error("Error obteniendo los tests:", error);
+        return null;  // Retornamos null si hay un error en la operación
+    }
+};
+
+// // Ejemplo de ejecución
+// hasTest().then(randomTests => {
+//     if (randomTests) {
+//         console.log(randomTests);
+//     }
+// });
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos del DOM
