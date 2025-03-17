@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         jugadores.forEach(jugador => {
             const li = document.createElement('li');
-            li.textContent = `${jugador.nombre.toLowerCase()}       ${jugador.time} segundos`;
+            li.textContent = `${jugador.nombre}       ${jugador.time} segundos`;
             playerList.appendChild(li);
         });
 

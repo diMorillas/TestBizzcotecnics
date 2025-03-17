@@ -1,9 +1,34 @@
-export class Jugador {
-    constructor(id, nombre, email, time) {
-        this.id = id;
-        this.nombre = nombre;
+export class Persona {
+    constructor(idPersona, nom, email) {
+        if (new.target === Persona) {
+            throw new Error("No se puede instanciar una clase abstracta");
+        }
+        this.idPersona = idPersona;
+        this.nom = nom;
         this.email = email;
-        this.time = time; 
+    }
+
+    crearJugador(puntuacio) {
+        throw new Error("Método abstracto 'crearJugador' debe ser implementado");
+    }
+}
+
+export class Jugador extends Persona {
+    constructor(idPersona, nom, email, puntuacio) {
+        super(idPersona, nom, email);
+        this.puntuacio = puntuacio;
+    }
+
+    crearJugador(puntuacio) {
+        return new Jugador(this.idPersona, this.nom, this.email, puntuacio);
+    }
+
+    getPuntuacio() {
+        return this.puntuacio;
+    }
+
+    setPuntuacio(puntuacio) {
+        this.puntuacio = puntuacio;
     }
 }
 
@@ -21,20 +46,20 @@ export function actualizarMedia(jugadores) {
         return;
     }
     
-    const tiempos = jugadores.map(jugador => jugador.time); 
+    const tiempos = jugadores.map(jugador => jugador.puntuacio); 
     const mediaTiempo = media(tiempos); 
-    document.getElementById("media").textContent = mediaTiempo.toFixed(0) + " segundos"; // Mostrar con 2 decimales
+    document.getElementById("media").textContent = mediaTiempo.toFixed(0) + " segundos"; // Mostrar con 0 decimales
 }
 
-// Función para filtrar los jugadores con mejor tiempo (menos de 10 segundos)
+// Función para filtrar los jugadores con mejor puntuación (menor a 10 segundos)
 export function mostrarMejoresTiempos(jugadores) {
-    // Filtrar jugadores con tiempo menor a 10 segundos
-    const mejoresJugadores = jugadores.filter(jugador => jugador.time < 10);
+    // Filtrar jugadores con puntuación menor a 10 segundos
+    const mejoresJugadores = jugadores.filter(jugador => jugador.puntuacio < 10);
 
     // Obtener el elemento DOM donde mostrar los mejores tiempos
     const playerBestTimes = document.getElementById('playerBestTimes');
 
-    // Si no hay jugadores con tiempo menor a 10 segundos, mostrar mensaje
+    // Si no hay jugadores con puntuación menor a 10 segundos, mostrar mensaje
     if (mejoresJugadores.length === 0) {
         playerBestTimes.textContent = "No hay jugadores con tiempos menores a 10 segundos";
         return;
@@ -46,7 +71,7 @@ export function mostrarMejoresTiempos(jugadores) {
     // Mostrar los mejores tiempos
     mejoresJugadores.forEach(jugador => {
         const li = document.createElement('li');
-        li.textContent = `${jugador.nombre.toLowerCase()} - ${jugador.time} segundos`;
+        li.textContent = `${jugador.nom.toLowerCase()} - ${jugador.puntuacio} segundos`;
         playerBestTimes.appendChild(li);
     });
 }
