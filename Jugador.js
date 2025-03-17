@@ -53,7 +53,7 @@ export function actualizarMedia(jugadores) {
 
 // Función para filtrar los jugadores con mejor puntuación (menor a 10 segundos)
 export function mostrarMejoresTiempos(jugadores) {
-    const mejoresJugadores = Array.from(jugadores.values()).filter(jugador => jugador.puntuacio < 10);
+    const mejoresJugadores = Array.from(jugadores.values()).filter(jugador => jugador.tiempo < 10);
 
     const playerBestTimes = document.getElementById('playerBestTimes');
     playerBestTimes.innerHTML = mejoresJugadores.length === 0

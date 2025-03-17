@@ -315,8 +315,8 @@ ul {
     background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
     border-radius: 10px;
     text-align: center;
-    margin: 0 auto;
     margin-top: 110px;
+    margin-left: 110px;
 }
 
 #newTest{
@@ -475,4 +475,15 @@ ul {
     top: 120px;
     font-size: 32px; 
     cursor: pointer;
+}
+
+.containerSettings{
+    width: 450px;
+    height: 661px;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: -114px;
+    margin-left: 1250px;
 }

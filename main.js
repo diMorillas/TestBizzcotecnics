@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const acceptButton = document.getElementById('acceptButton');
     const pageTest = document.getElementById('pageTest');
     const pageForm = document.getElementById('pageForm');
+    const pageSettings = document.getElementById('pageSettings');
     const pageFinal = document.getElementById('pageFinal');
     const btnForm = document.getElementById('submitForm');
     const playerList = document.getElementById('playerList');
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-music');
-    const bestTimes = document.getElementById('playerBestTimes');
+    const settings = document.getElementById('ajustes');
 
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -147,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Actualizar la media de tiempos
         actualizarMedia(jugadores);
     }
+
 
     // Orden por tiempo
     signTime.addEventListener('click', () => {
