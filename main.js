@@ -1,50 +1,66 @@
+// main.js
+
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
-import { indexedDbManager } from './indexedDbManager';  // Ajusta la ruta si es necesario
-
-
-const getRandomTests = (tests) => {
-    const randomIndexes = [];
-    while (randomIndexes.length < 4) {
-        const randomIndex = Math.floor(Math.random() * tests.length);
-        if (!randomIndexes.includes(randomIndex)) {
-            randomIndexes.push(randomIndex);
-        }
-    }
-    return randomIndexes.map(index => tests[index]);
-};
-
-const hasTest = async () => {
-    try {
-        const tests = await indexedDbManager("getAllTests");
-        
-        // Comprobamos si hay tests
-        if (tests && tests.length > 0) {
-            // Aquí obtienes tests aleatorios
-            const randomTests = getRandomTests(tests);
-            console.log("Tests seleccionados para la partida:", randomTests);
-            return randomTests;  // Regresamos los tests aleatorios seleccionados
-        } else {
-            console.log("No hay tests disponibles.");
-            return null;  // Retornamos null si no hay tests
-        }
-    } catch (error) {
-        console.error("Error obteniendo los tests:", error);
-        return null;  // Retornamos null si hay un error en la operación
-    }
-};
-
-// // Ejemplo de ejecución
-// hasTest().then(randomTests => {
-//     if (randomTests) {
-//         console.log(randomTests);
-//     }
-// });
-
+import { indexedDbManager } from './indexedDbManager.js';
+import { Test } from "./test.js";
+import { Figura } from "./figura.js";
+import { figuraAlianza } from "./figuraAlianza.js";
+import { figuraHorda } from "./figuraHorda.js";
+import { figuraHots } from "./figuraHots.js";
+import { figuraOverwatch } from "./figuraOverwatch.js";
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const getRandomTests = (tests) => {
+        const randomIndexes = [];
+        while (randomIndexes.length < 4) {
+            const randomIndex = Math.floor(Math.random() * tests.length);
+            if (!randomIndexes.includes(randomIndex)) {
+                randomIndexes.push(randomIndex);
+            }
+        }
+        
+        // Creamos un Set para asegurar que los tests sean únicos
+        return new Set(randomIndexes.map(index => tests[index]));
+    };
+    
+    /**
+     * 
+     * @returns un Set con los tests aleatorios
+     */
+    const hasTest = async () => {
+        try {
+            const tests = await indexedDbManager("getAllTests");
+            
+            // Comprobamos si hay tests
+            if (tests && tests.length > 0) {
+                // Aquí obtienes tests aleatorios en un Set
+                const randomTests = getRandomTests(tests);
+                console.log("Tests seleccionados para la partida:", randomTests);
+                return randomTests;  // Regresamos un Set con los tests aleatorios seleccionados
+            } else {
+                console.log("No hay tests disponibles.");
+                return null;  // Retornamos null si no hay tests
+            }
+        } catch (error) {
+            console.error("Error obteniendo los tests:", error);
+            return null;  // Retornamos null si hay un error en la operación
+        }
+    };
+    
+    // Ejemplo de ejecución
+    hasTest().then(randomTests => {
+        if (randomTests) {
+            // Aquí puedes trabajar con el Set de tests
+            console.log([...randomTests]); // Convertir Set a Array para ver los valores
+        }
+    });
+    
+
+
     // Elementos del DOM
     const acceptButton = document.getElementById('acceptButton');
     const pageTest = document.getElementById('pageTest');
@@ -56,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextTest = document.getElementById('btnNext');
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
-    const music = document.getElementById('bg-music');
+    const music = document.getElementById('bg-musicc');
     const bestTimes = document.getElementById('playerBestTimes');
     
     let countdown; // Variable para almacenar el intervalo del temporizador

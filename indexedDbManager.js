@@ -1,10 +1,9 @@
-import { Test } from "./test";
-import { Figura } from "./figura";
-import { figuraAlianza } from "./figuraAlianza";
-import { figuraHorda } from "./figuraHorda";
-import { figuraHots } from "./figuraHots";
-import { figuraOverwatch } from "./figuraOverwatch";
-
+import { Test } from "./test.js";
+import { Figura } from "./figura.js";
+import { figuraAlianza } from "./figuraAlianza.js";
+import { figuraHorda } from "./figuraHorda.js";
+import { figuraHots } from "./figuraHots.js";
+import { figuraOverwatch } from "./figuraOverwatch.js";
 
 const DB_NAME = "testsDB";
 const DB_VERSION = 1;
@@ -52,6 +51,7 @@ const operaciones = {
 // Función de acceso dinámico con `new Function()`
 export const indexedDbManager = async (operation, data = null) => {
     try {
+        console.log("he entrado en la función");
         db = await openDB();
         
         return new Promise((resolve, reject) => {
