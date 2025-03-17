@@ -1,10 +1,9 @@
 export class Persona {
-    constructor(idPersona, nom, email) {
+    constructor(nombre, email) {
         if (new.target === Persona) {
             throw new Error("No se puede instanciar una clase abstracta");
         }
-        this.idPersona = idPersona;
-        this.nom = nom;
+        this.nombre = nombre;
         this.email = email;
     }
 
@@ -14,8 +13,9 @@ export class Persona {
 }
 
 export class Jugador extends Persona {
-    constructor(idPersona, nom, email, puntuacio) {
-        super(idPersona, nom, email);
+    constructor(nombre, email,tiempo,puntuacio) {
+        super(nombre, email);
+        this.tiempo = tiempo;
         this.puntuacio = puntuacio;
     }
 
@@ -46,7 +46,7 @@ export function actualizarMedia(jugadores) {
         return;
     }
     
-    const tiempos = jugadores.map(jugador => jugador.puntuacio); 
+    const tiempos = jugadores.map(jugador => jugador.tiempo); 
     const mediaTiempo = media(tiempos); 
     document.getElementById("media").textContent = mediaTiempo.toFixed(0) + " segundos"; // Mostrar con 0 decimales
 }
@@ -71,7 +71,7 @@ export function mostrarMejoresTiempos(jugadores) {
     // Mostrar los mejores tiempos
     mejoresJugadores.forEach(jugador => {
         const li = document.createElement('li');
-        li.textContent = `${jugador.nom.toLowerCase()} - ${jugador.puntuacio} segundos`;
+        li.textContent = `${jugador.nombre} - ${jugador.tiempo} segundos`;
         playerBestTimes.appendChild(li);
     });
 }
