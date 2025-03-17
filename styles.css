@@ -466,3 +466,12 @@ ul {
     margin-right: 17px;
     font-size: 48px;
 }
+
+/*Ajustes*/
+
+.ajustes{
+    position: absolute;
+    right: -50px;
+    top: 120px;
+    font-size: 32px; 
+}
