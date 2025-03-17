@@ -14,6 +14,32 @@ import { figuraOverwatch } from "./figuraOverwatch.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * Es una función que se ejecuta si no detecta tests creados en indexedDB
+     * @returns un array de tests para añadir a indexedDB
+     */
+
+    const createDefaultTests = () => {
+        return [
+            new Test([
+                new figuraAlianza(1, "url1", "Alianza"),
+                new figuraHorda(2, "url2", "Horda")
+            ], 1),
+            new Test([
+                new figuraHots(3, "url3", "Hots"),
+                new figuraOverwatch(4, "url4", "Overwatch")
+            ], 2),
+            new Test([
+                new figuraAlianza(5, "url5", "Alianza"),
+                new figuraHorda(6, "url6", "Horda")
+            ], 3),
+            new Test([
+                new figuraHots(7, "url7", "Hots"),
+                new figuraOverwatch(8, "url8", "Overwatch")
+            ], 4)
+        ];
+    };
+
     const getRandomTests = (tests) => {
         const randomIndexes = [];
         while (randomIndexes.length < 4) {
@@ -29,28 +55,44 @@ document.addEventListener('DOMContentLoaded', () => {
     
     /**
      * 
-     * @returns un Set con los tests aleatorios
+     * @returns un Set con los tests aleatorios. 
+     * Si no tenemos tests creados los crea y nos los guarda en indexedDB
      */
-    const hasTest = async () => {
-        try {
-            const tests = await indexedDbManager("getAllTests");
-            console.log(tests);
+
+const hasTest = async () => {
+    try {
+        const tests = await indexedDbManager("getAllTests");
+        console.log("Tests obtenidos:", tests);
+
+        // Comprobamos si hay tests
+        if (tests && tests.length > 0) {
+            // Aquí obtienes tests aleatorios en un Set
+            const randomTests = getRandomTests(tests);
+            console.log("Tests seleccionados para la partida:", randomTests);
+            return randomTests;  // Regresamos un Set con los tests aleatorios seleccionados
+        } else {
+            console.log("No hay tests disponibles.");
             
-            // Comprobamos si hay tests
-            if (tests && tests.length > 0) {
-                // Aquí obtienes tests aleatorios en un Set
-                const randomTests = getRandomTests(tests);
-                console.log("Tests seleccionados para la partida:", randomTests);
-                return randomTests;  // Regresamos un Set con los tests aleatorios seleccionados
-            } else {
-                console.log("No hay tests disponibles.");
-                return null;  // Retornamos null si no hay tests
+            // Si no hay tests, los creamos
+            console.log("Creando nuevos tests...");
+
+            // Crear los nuevos tests con figuras
+            const newTests = createDefaultTests();
+
+            // Guardar los nuevos tests en IndexedDB
+            for (let test of newTests) {
+                await indexedDbManager("addTest", test);
             }
-        } catch (error) {
-            console.error("Error obteniendo los tests:", error);
-            return null;  // Retornamos null si hay un error en la operación
+
+            console.log("Nuevos tests creados y guardados en IndexedDB.");
+            return getRandomTests(newTests);  // Regresamos los tests creados de forma aleatoria
         }
-    };
+    } catch (error) {
+        console.error("Error obteniendo los tests:", error);
+        return null;  // Retornamos null si hay un error en la operación
+    }
+};
+    
     
     // Ejemplo de ejecución
     hasTest().then(randomTests => {
