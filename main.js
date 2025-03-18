@@ -77,10 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Obtener jugadores del LocalStorage
     function getJugadores() {
-        const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
-        console.log("Jugadores cargados desde LocalStorage:", jugadores); // Log para verificar los jugadores cargados
-        return jugadores;
+        try {
+            const data = localStorage.getItem("jugadores");
+            return data ? JSON.parse(data) : [];
+        } catch (error) {
+            console.error("Error al parsear jugadores desde LocalStorage:", error);
+            localStorage.removeItem("jugadores"); // Elimina el dato corrupto
+            return [];
+        }
     }
+    
 
     // Guardar jugadores en el LocalStorage
     function guardarJugadores(jugadores) {
