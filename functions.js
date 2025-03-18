@@ -19,3 +19,8 @@ export function addPlayer(array) {
 
     return array;
 }
+
+export function removeLastElement (array){
+    array.pop();
+    return array;
+}

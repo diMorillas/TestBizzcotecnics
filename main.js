@@ -1,6 +1,6 @@
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
-import { addPlayer } from './functions.js';
+import { addPlayer,removeLastElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-music');
-    const settings = document.getElementById('ajustes');
 
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -156,11 +155,23 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarMedia(jugadores);
     }
 
+
+    // Anadir nuevo jugador via Prompts
     let btnAddPlayer = document.getElementById('addNewPlayer');
     btnAddPlayer.addEventListener('click', () => {
         jugadores = addPlayer(jugadores); // Reasignamos el array con el nuevo jugador
         guardarJugadores(jugadores); // Guardamos en LocalStorage
         actualizarListaJugadores(); // Actualizamos la lista en el DOM
+        mostrarMejoresTiempos(jugadores);
+
+    });
+
+    // Borrar el ultimo elemento por Indice
+    let btnRemoveLastPlayer = document.getElementById('removeLastPlayer');
+    btnRemoveLastPlayer.addEventListener('click', () => {
+        removeLastElement(jugadores);
+        actualizarListaJugadores(); // Actualizamos la lista en el DOM
+        mostrarMejoresTiempos(jugadores);
     });
     
 
