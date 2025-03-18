@@ -1,5 +1,6 @@
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
+import { addPlayer } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Guardar el nuevo jugador y actualizar la lista
+    let jugadores = getJugadores();
     btnForm.addEventListener('click', () => {
         const nameForm = document.getElementById('nameForm').value.trim();
         const emailForm = document.getElementById('emailForm').value.trim();
@@ -104,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const jugadores = getJugadores();
 
         // Calcular el tiempo transcurrido en segundos
         const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
@@ -149,6 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarMedia(jugadores);
     }
 
+    let btnAddPlayer = document.getElementById('addNewPlayer');
+    btnAddPlayer.addEventListener('click', () => {
+        jugadores = addPlayer(jugadores); // Reasignamos el array con el nuevo jugador
+        guardarJugadores(jugadores); // Guardamos en LocalStorage
+        actualizarListaJugadores(); // Actualizamos la lista en el DOM
+    });
+    
 
     // Orden por tiempo
     signTime.addEventListener('click', () => {
