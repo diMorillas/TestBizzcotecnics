@@ -24,3 +24,9 @@ export function removeLastElement (array){
     array.pop();
     return array;
 }
+
+
+export function removeFirstElement (array){
+    array.shift();
+    return array;
+}
