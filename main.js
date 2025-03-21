@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calcular la media de las puntuaciones
     let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
 
-    avgScore.innerHTML = mediaTotal;
+    avgScore.innerHTML = mediaTotal.toFixed(2);
 
 
 
