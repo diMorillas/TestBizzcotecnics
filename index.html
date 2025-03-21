@@ -127,7 +127,6 @@
   <div id="pageFinal" style="display: none;">
     <div class="containerFinal">
       <h1 style="font-size: 64px; font-weight: 200">Resultados</h1>
-
       <h3 style="font-size: 32px; font-weight: 200">
         Resultados globales de todos los jugadores
       </h3>
@@ -170,17 +169,19 @@
   <span id="media"></span>
 </div>
 
-    </div>
+<div class="containerSettings">
+  <h1 style="padding-top: 33px;font-weight: 200;">Ajustes manuales</h1>
+  <button id="addNewPlayer">Introducir manualmente un jugador</button>
+  <button id="removeLastPlayer">Borrar el último elemento</button>
+  <button id="removeFirstPlayer">Borrar el primer elemento</button>
+</div>
 
 
 
-    <div class="submitContainer">
-      <button type="submit" id="newTest">Nuevo Test</button>
-    </div>
-
-
-
-  </div>
+</div>
+<div class="submitContainer">
+  <button type="submit" id="newTest">Nuevo Test</button>
+</div>
 
   <!--Modulos-->
   <script type="module" src="main.js"></script>
