@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-music');
+    const avgScore = document.getElementById('mediaPuntuacion');
 
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -125,10 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
         const currentScore = sessionStorage.getItem('score') || 0;
 
-        const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, currentScore);
+        const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, parseInt(currentScore));
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
+ 
+
+
+
 
         console.log("Jugador añadido:", nuevoJugador); // Log para verificar el jugador añadido
         console.log("Jugadores actuales:", jugadores); // Log para verificar la lista de jugadores
@@ -154,13 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         jugadores.forEach(jugador => {
             const li = document.createElement('li');
-            li.textContent = `${jugador.nombre}       ${jugador.tiempo} segundos`;
+            li.textContent = `${jugador.nombre}${jugador.tiempo} segundos`;
             playerList.appendChild(li);
         });
 
         // Actualizar la media de tiempos
         actualizarMedia(jugadores);
     }
+
+    // Crear un array de puntuaciones
+    let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
+
+    // Calcular la media de las puntuaciones
+    let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
+
+    avgScore.innerHTML = mediaTotal;
+
 
 
     // Anadir nuevo jugador via Prompts
