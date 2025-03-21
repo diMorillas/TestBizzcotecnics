@@ -358,6 +358,19 @@ ul {
     cursor: pointer;
 }
 
+#removeFirstPlayer{
+    font-family: "Roboto Mono", monospace;
+    width: 411px;
+    height: 54px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+    box-shadow: 2px 2px 110px 16px rgb(95, 93, 95);
+    margin-top: 15px;
+    font-size: 19px;
+    cursor: pointer;
+}
+
 
 /*Container  Jugadores*/
 

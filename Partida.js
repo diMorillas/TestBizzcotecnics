@@ -1,9 +1,8 @@
 import { Jugador } from './Jugador.js';
 
 export class Partida {
-    constructor(idPartida, puntuacioPartida) {
+    constructor(idPartida) {
         this.idPartida = idPartida;
-        this.puntuacioPartida = puntuacioPartida;
         this.jugadoresPartida = new Map(); 
         this.testsPartida = null; 
     }

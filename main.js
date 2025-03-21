@@ -1,6 +1,6 @@
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
-import { addPlayer,removeLastElement } from './functions.js';
+import { addPlayer,removeLastElement,removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -133,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para actualizar la lista de jugadores en el DOM
     function actualizarListaJugadores() {
-        const jugadores = getJugadores();
         playerList.innerHTML = '';
 
         // Orden por tiempo
@@ -142,8 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             jugadores.sort((a, b) => b.tiempo - a.tiempo); // Orden descendente por tiempo
         }
-
-        console.log("Jugadores ordenados:", jugadores); // Log para verificar el orden de los jugadores
 
         jugadores.forEach(jugador => {
             const li = document.createElement('li');
@@ -170,10 +167,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let btnRemoveLastPlayer = document.getElementById('removeLastPlayer');
     btnRemoveLastPlayer.addEventListener('click', () => {
         removeLastElement(jugadores);
+        guardarJugadores(jugadores);
         actualizarListaJugadores(); // Actualizamos la lista en el DOM
         mostrarMejoresTiempos(jugadores);
     });
     
+    let btnRemoveFirstPlayer = document.getElementById('removeFirstPlayer');
+    btnRemoveFirstPlayer.addEventListener('click', () => {
+        removeFirstElement(jugadores);
+        guardarJugadores(jugadores);
+        actualizarListaJugadores(); // Actualizamos la lista en el DOM
+        mostrarMejoresTiempos(jugadores);
+    });
 
     // Orden por tiempo
     signTime.addEventListener('click', () => {
