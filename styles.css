@@ -534,3 +534,13 @@ ul {
     margin-right: 19px;
 }
 
+#puntosJugador{
+    top: 40px;
+    text-align: center;
+    font-size: 48px;
+    right: 70px;
+    position: absolute;
+    color: white;
+}
+
+

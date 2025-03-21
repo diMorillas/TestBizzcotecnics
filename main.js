@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-music');
     const avgScore = document.getElementById('mediaPuntuacion');
+    const puntosJugador = document.getElementById('puntosJugador');
 
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -67,17 +68,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     nextTest.innerHTML = testCounter === 3 ? 'Finalizar' : 'Siguiente';
                                     
                     loadRandomTest();
-                } else {
+                }
+                else {
                     numberTest.innerHTML = "3/3";
                     nextTest.innerHTML = 'Finalizar';
                     tiempoFinal = Date.now(); // Guardamos el tiempo exacto cuando se finaliza el test
-
                     setTimeout(() => {
                         pageTest.style.display = 'none';
                         clearInterval(countdown);  // Limpiar el temporizador
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
                         pageForm.style.display = 'block';
+
                     }, 500);
+
                 }
             });
         }
@@ -124,13 +127,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Calcular el tiempo transcurrido en segundos
         const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
-        const currentScore = sessionStorage.getItem('score') || 0;
+        let currentScore = sessionStorage.getItem('score') || 0;
 
         const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, parseInt(currentScore));
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
- 
+        
+                // Crear un array de puntuaciones
+        let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
+
+        // Calcular la media de las puntuaciones
+        let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
+
+        avgScore.innerHTML = mediaTotal.toFixed(2);
+
+        let jugadorFinal = jugadores.length-1;
+        let puntuacionJugador;
+        if(jugadores.length>0){
+            puntuacionJugador = jugadores[jugadorFinal].puntuacio;
+        }
+        puntosJugador.innerHTML = puntuacionJugador;
 
 
 
@@ -175,6 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     avgScore.innerHTML = mediaTotal.toFixed(2);
 
+    let jugadorFinal = jugadores.length-1;
+    let puntuacionJugador;
+    if(jugadores.length>0){
+        puntuacionJugador = jugadores[jugadorFinal].puntuacio;
+    }
+    puntosJugador.innerHTML = puntuacionJugador;
+    
 
 
     // Anadir nuevo jugador via Prompts
