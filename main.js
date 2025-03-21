@@ -4,7 +4,6 @@ import { addPlayer,removeLastElement,removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 import { indexedDbManager, operaciones } from './indexedDbManager.js';
 import { Test } from "./test.js";
-import { Figura } from "./figura.js";
 import { figuraHeartStone } from "./figuraHeartStone.js";
 import { figuraWow } from "./figuraWow.js";
 import { figuraHots } from "./figuraHots.js";
