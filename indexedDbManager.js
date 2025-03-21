@@ -1,10 +1,9 @@
 import { Test } from "./test.js";
 import { Figura } from "./figura.js";
-import { figuraAlianza } from "./figuraAlianza.js";
-import { figuraHorda } from "./figuraHorda.js";
+import { figuraHeartStone } from "./figuraHeartStone.js";
+import { figuraWow } from "./figuraWow.js";
 import { figuraHots } from "./figuraHots.js";
 import { figuraOverwatch } from "./figuraOverwatch.js";
-
 const DB_NAME = "testsDB";
 const DB_VERSION = 1;
 const STORE_NAME = "tests";

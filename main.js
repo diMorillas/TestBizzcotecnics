@@ -2,6 +2,13 @@ import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { addPlayer,removeLastElement,removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
+import { indexedDbManager, operaciones } from './indexedDbManager.js';
+import { Test } from "./test.js";
+import { Figura } from "./figura.js";
+import { figuraHeartStone } from "./figuraHeartStone.js";
+import { figuraWow } from "./figuraWow.js";
+import { figuraHots } from "./figuraHots.js";
+import { figuraOverwatch } from "./figuraOverwatch.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos del DOM
@@ -198,4 +205,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     console.log('Successfully Connected to main.js');
+
+
+    //indexedDB
+
+    const createDefaultTests = () => {
+        return [
+            new Test([
+                new figuraOverwatch(1, "./assets/images/ow.svg", "OverWatch"),
+                new figuraHots(2, "./assets/images/hots.png", "Hots"),
+                new figuraWow(3, "./assets/images/wow.png", "Wow"),
+                new figuraHeartStone(4, "./assets/images/heartstone.png", "Heartstone")
+            ], 1,1),
+            new Test([
+                new figuraOverwatch(5, "./assets/images/ow.svg", "OverWatch"),
+                new figuraHots(6, "./assets/images/hots.png", "Hots"),
+                new figuraWow(7, "./assets/images/wow.png", "Wow"),
+                new figuraHeartStone(8, "./assets/images/heartstone.png", "Heartstone")
+            ], 2,1),
+            new Test([
+                new figuraOverwatch(9, "./assets/images/ow.svg", "OverWatch"),
+                new figuraHots(10, "./assets/images/hots.png", "Hots"),
+                new figuraWow(11, "./assets/images/wow.png", "Wow"),
+                new figuraHeartStone(12, "./assets/images/heartstone.png", "Heartstone")
+            ], 3,1),
+            new Test([
+                new figuraOverwatch(13, "./assets/images/ow.svg", "OverWatch"),
+                new figuraHots(14, "./assets/images/hots.png", "Hots"),
+                new figuraWow(15, "./assets/images/wow.png", "Wow"),
+                new figuraHeartStone(16, "./assets/images/heartstone.png", "Heartstone")
+            ], 4,1)
+        ];
+    };
+    
+
+    const getRandomTests = (tests) => {
+        const randomIndexes = [];
+        while (randomIndexes.length < 4) {
+            const randomIndex = Math.floor(Math.random() * tests.length);
+            if (!randomIndexes.includes(randomIndex)) {
+                randomIndexes.push(randomIndex);
+            }
+        }
+        return new Set(randomIndexes.map(index => tests[index]));
+    };
+
+    const hasTest = async () => {
+        try {
+            const tests = await indexedDbManager("getAllTests");
+            if (tests && tests.length > 0) {
+                const randomTests = getRandomTests(tests);
+                return randomTests;
+            } else {
+                const newTests = createDefaultTests();
+                for (let test of newTests) {
+                    await indexedDbManager("addTest", test);
+                }
+            }
+        } catch (error) {
+            console.error("Error obteniendo los tests:", error);
+            return null;
+        }
+    };
+
+    hasTest().then(randomTests => {
+        if (randomTests) {
+            // Aquí puedes trabajar con el Set de tests
+            console.log(randomTests);
+        }
+    });
+
+
 });
+
+
