@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         jugadores.forEach(jugador => {
             const li = document.createElement('li');
-            li.textContent = `${jugador.nombre}${jugador.tiempo} segundos`;
+            li.textContent = `${jugador.nombre} ${jugador.tiempo} segundos`;
             playerList.appendChild(li);
         });
 
