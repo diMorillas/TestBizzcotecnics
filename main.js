@@ -65,6 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     testCounter++;
                     numberTest.innerHTML = `${testCounter}/3`;
                     nextTest.innerHTML = testCounter === 3 ? 'Finalizar' : 'Siguiente';
+                                    
+                    loadRandomTest();
                 } else {
                     numberTest.innerHTML = "3/3";
                     nextTest.innerHTML = 'Finalizar';
@@ -80,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    
 
     // Obtener jugadores del LocalStorage
     function getJugadores() {
@@ -105,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnForm.addEventListener('click', () => {
         const nameForm = document.getElementById('nameForm').value.trim();
         const emailForm = document.getElementById('emailForm').value.trim();
-
+        //regex 
         const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -121,8 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Calcular el tiempo transcurrido en segundos
         const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
+        const currentScore = sessionStorage.getItem('score') || 0;
 
-        const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, 0);
+        const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, currentScore);
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
@@ -269,41 +273,53 @@ document.addEventListener('DOMContentLoaded', () => {
             return null;
         }
     };
-    hasTest().then(randomTests => {
-        if (randomTests) {
-            const testArray = Array.from(randomTests);
-            // Usamos un índice aleatorio válido:
-            const testRandom = Math.floor(Math.random() * testArray.length);
-            const selectedTest = testArray[testRandom];
-            console.log("Test seleccionado:", selectedTest);
-            
-            if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
-                console.error("El test seleccionado no tiene suficientes figuras.");
-                return;
-            }
-            
-            // Seleccionar los elementos del DOM
-            const figureOne = document.querySelector('.figureOne img');
-            const figureTwo = document.querySelector('.figureTwo img');
-            const figureThree = document.querySelector('.figureThree img');
-            const figureFour = document.querySelector('.figureFour'); // Queda vacío
-            
-            // Asignar las imágenes a los primeros tres contenedores
-            figureOne.src = selectedTest.figuras[0].urlFigura;
-            figureTwo.src = selectedTest.figuras[1].urlFigura;
-            figureThree.src = selectedTest.figuras[2].urlFigura;
-            
-            // Dejar el cuarto contenedor vacío
-            figureFour.innerHTML = "";
-            
-            // Almacenar globalmente la respuesta correcta (el tipo de la figura faltante)
-            window.correctOption = selectedTest.figuras[3].tipoFigura;
-            console.log("Respuesta correcta:", window.correctOption);
+// Variable global para almacenar el Set de tests aleatorios
+let randomTestsGlobal = null;
+
+// Función para cargar un test aleatorio
+function loadRandomTest() {
+  if (!randomTestsGlobal) {
+    console.error("No hay tests cargados");
+    return;
+  }
+  const testArray = Array.from(randomTestsGlobal);
+  const randomIndex = Math.floor(Math.random() * testArray.length);
+  const selectedTest = testArray[randomIndex];
+  console.log("Test seleccionado:", selectedTest);
+
+  if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
+    console.error("El test seleccionado no tiene suficientes figuras.");
+    return;
+  }
+
+  // Limpiar el contenedor (por ejemplo, el cuarto contenedor)
+  const figureFour = document.querySelector('.figureFour');
+  figureFour.innerHTML = "";
+
+  // Seleccionar los elementos del DOM para las figuras
+  const figureOne = document.querySelector('.figureOne img');
+  const figureTwo = document.querySelector('.figureTwo img');
+  const figureThree = document.querySelector('.figureThree img');
+
+  // Asignar las imágenes a los contenedores correspondientes
+  figureOne.src = selectedTest.figuras[0].urlFigura;
+  figureTwo.src = selectedTest.figuras[1].urlFigura;
+  figureThree.src = selectedTest.figuras[2].urlFigura;
+
+  // Almacenar globalmente la respuesta correcta (el tipo de la figura faltante)
+  window.correctOption = selectedTest.figuras[3].tipoFigura;
+  console.log("Respuesta correcta:", window.correctOption);
+}
+
+// Inicializamos los tests y guardamos el Set globalmente
+hasTest().then(rt => {
+  if (rt) {
+    randomTestsGlobal = rt;
+    loadRandomTest(); // Cargar el primer test
+  }
+});
 
 
-        }
-    });
-    
 
 
 });
