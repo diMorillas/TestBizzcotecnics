@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guardarJugadores(jugadores);
         sessionStorage.setItem('score',0);
         
-        //         // Crear un array de puntuaciones
+        // Crear un array de puntuaciones
         // let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
 
         let puntuaciones = [];
