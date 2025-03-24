@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guardarJugadores(jugadores); // Guardamos en LocalStorage
         actualizarListaJugadores(); // Actualizamos la lista en el DOM
         mostrarMejoresTiempos(jugadores);
+        actualizarMedia(jugadores);
     });
 
     // Borrar el último elemento por índice

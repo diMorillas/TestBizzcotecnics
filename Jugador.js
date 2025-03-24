@@ -49,6 +49,13 @@ export function actualizarMedia(jugadores) {
     const tiempos = Array.from(jugadores.values()).map(jugador => jugador.tiempo);
     const mediaTiempo = media(tiempos);
     document.getElementById("media").textContent = mediaTiempo.toFixed(0) + " segundos";
+
+    const puntuaciones = Array.from(jugadores.values()).map(jugador=> jugador.puntuacio);
+    const mediaPuntuacion = media(puntuaciones);
+
+    document.getElementById('mediaPuntuacion').textContent = mediaPuntuacion.toFixed(2);
+
+
 }
 
 // Función para filtrar los jugadores con mejor puntuación (menor a 10 segundos)
