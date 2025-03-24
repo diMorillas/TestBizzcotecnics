@@ -488,11 +488,11 @@ const getRandomTests = (tests) => {
     const randomIndexes = [];
     while (randomIndexes.length < 6) {
         const randomIndex = Math.floor(Math.random() * tests.length);
-        randomIndexes.add(randomIndex); // El Set se encarga de evitar duplicados
+        if (!randomIndexes.includes(randomIndex)) {
+            randomIndexes.push(randomIndex);
+        }
     }
-
-    // Convertir los índices seleccionados a los tests correspondientes
-    return Array.from(randomIndexes).map(index => tests[index]);
+    return new Set(randomIndexes.map(index => tests[index]));
 };
 
 
@@ -542,7 +542,7 @@ function loadRandomTest() {
 
     const randomIndex = Math.floor(Math.random() * testArray.length);
     const selectedTest = testArray[randomIndex];
-    console.log(`test seleccionado: ${selectedTest}`);
+    console.log(`test seleccionado: ${selectedTest.id}`);
 
     if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
         console.error("El test seleccionado no tiene suficientes figuras.");
