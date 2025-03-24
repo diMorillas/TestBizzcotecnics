@@ -1,3 +1,4 @@
+// Clase Persona base
 export class Persona {
     constructor(nombre, email) {
         if (new.target === Persona) {
@@ -7,28 +8,38 @@ export class Persona {
         this.email = email;
     }
 
-    crearJugador(tiempo, puntuacio) {
-        throw new Error("Método abstracto 'crearJugador' debe ser implementado");
+    // Método polimórfico: devuelve detalles generales
+    getDetalle() {
+        return `Nombre: ${this.nombre}, Email: ${this.email}`;
     }
 }
 
+// Clase Jugador que extiende Persona
 export class Jugador extends Persona {
-    constructor(nombre, email, tiempo, puntuacio) {
+    constructor(nombre, email, tiempo, puntuacion) {
         super(nombre, email);
         this.tiempo = tiempo;
-        this.puntuacio = puntuacio;
+        this.puntuacion = puntuacion;
     }
 
-    crearJugador(tiempo, puntuacio) {
-        return new Jugador(this.nombre, this.email, tiempo, puntuacio);
+    // Sobrescribe el método getDetalle para dar más detalles sobre el jugador
+    // Si se pasa un tiempo, muestra los detalles del jugador con ese tiempo
+    static getDetalle(tiempo, jugadores) {
+        const jugadorEncontrado = jugadores.find(jugador => jugador.tiempo === tiempo);
+
+        if (jugadorEncontrado) {
+            return `${jugadorEncontrado.getDetalle()}, Tiempo: ${jugadorEncontrado.tiempo} segundos, Puntuación: ${jugadorEncontrado.puntuacion}`;
+        } else {
+            return "No se encontró un jugador con ese tiempo.";
+        }
     }
 
-    getPuntuacio() {
-        return this.puntuacio;
+    getPuntuacion() {
+        return this.puntuacion;
     }
 
-    setPuntuacio(puntuacio) {
-        this.puntuacio = puntuacio;
+    setPuntuacion(puntuacion) {
+        this.puntuacion = puntuacion;
     }
 }
 
@@ -60,3 +71,5 @@ export function mostrarMejoresTiempos(jugadores) {
         ? "No hay jugadores con tiempos menores a 10 segundos"
         : mejoresJugadores.map(jugador => `<li>${jugador.nombre} - ${jugador.tiempo} segundos</li>`).join('');
 }
+
+
