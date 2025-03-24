@@ -1,6 +1,6 @@
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
-import { addPlayer,removeLastElement,removeFirstElement } from './functions.js';
+import { addPlayer, removeLastElement, removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 import { indexedDbManager, operaciones } from './indexedDbManager.js';
 import { Test } from "./test.js";
@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let startTime = Date.now(); // Guardamos el tiempo de inicio
     let arrowTime = true;
 
-    let partidas = new Map(); // Cada vez que finaliza una partida con el boton finalizar, se añade con un ID autoincremental.
+    // Map para almacenar las partidas finalizadas
+    let partidas = new Map(); // Cada vez que finaliza una partida con el botón "finalizar", se añade con un ID autoincremental.
 
     initDragAndDrop();
 
@@ -70,26 +71,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     nextTest.innerHTML = testCounter === 3 ? 'Finalizar' : 'Siguiente';
                                     
                     loadRandomTest();
-                }
-                else {
+                } else {
+                    // Finalización del test
                     numberTest.innerHTML = "3/3";
                     nextTest.innerHTML = 'Finalizar';
                     tiempoFinal = Date.now(); // Guardamos el tiempo exacto cuando se finaliza el test
+                    
+                    // Calcular el tiempo transcurrido en segundos
+                    const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);
+                    // Usar el tamaño actual del map + 1 como ID autoincremental
+                    const partidaId = partidas.size + 1;
+                    
+                    // Crear un objeto con los datos de la partida
+                    const datosPartida = {
+                        tiempoInicio: startTime,
+                        tiempoFinal: tiempoFinal,
+                        duracion: tiempoTest,
+                        score: parseInt(sessionStorage.getItem('score')) || 0,
+                        // Puedes agregar más propiedades si es necesario (por ejemplo, jugador, test completados, etc.)
+                    };
+                    
+                    // Guardar la partida en el map
+                    partidas.set(partidaId, datosPartida);
+                    console.log("Partida guardada:", partidas.get(partidaId,datosPartida));
+                    
                     setTimeout(() => {
                         document.body.classList.remove('timeout');        
                         pageTest.style.display = 'none';
                         clearInterval(countdown);  // Limpiar el temporizador
-                        console.log('Cuenta regresiva terminada de manera satisfactoria');
+                        //console.log('Cuenta regresiva terminada de manera satisfactoria');
                         pageForm.style.display = 'block';
-
                     }, 500);
-
                 }
             });
         }
     }
     
-
     // Obtener jugadores del LocalStorage
     function getJugadores() {
         try {
@@ -102,11 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-
     // Guardar jugadores en el LocalStorage
     function guardarJugadores(jugadores) {
         localStorage.setItem("jugadores", JSON.stringify(jugadores));
-        console.log("Jugadores guardados en LocalStorage:", jugadores); // Log para verificar el almacenamiento
+        //console.log("Jugadores guardados en LocalStorage:", jugadores);
     }
 
     // Guardar el nuevo jugador y actualizar la lista
@@ -114,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnForm.addEventListener('click', () => {
         const nameForm = document.getElementById('nameForm').value.trim();
         const emailForm = document.getElementById('emailForm').value.trim();
-        //regex 
+        // Regex 
         const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -127,37 +143,32 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-
         // Calcular el tiempo transcurrido en segundos
-        const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
+        const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);
         let currentScore = sessionStorage.getItem('score') || 0;
 
         const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, parseInt(currentScore));
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
-        sessionStorage.setItem('score',0);
+        sessionStorage.setItem('score', 0);
         
-                // Crear un array de puntuaciones
+        // Crear un array de puntuaciones
         let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
 
         // Calcular la media de las puntuaciones
         let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
-
         avgScore.innerHTML = mediaTotal.toFixed(2);
 
-        let jugadorFinal = jugadores.length-1;
+        let jugadorFinal = jugadores.length - 1;
         let puntuacionJugador;
-        if(jugadores.length>0){
+        if (jugadores.length > 0) {
             puntuacionJugador = jugadores[jugadorFinal].puntuacio;
         }
         puntosJugador.innerHTML = puntuacionJugador;
 
-
-
-
-        console.log("Jugador añadido:", nuevoJugador); // Log para verificar el jugador añadido
-        console.log("Jugadores actuales:", jugadores); // Log para verificar la lista de jugadores
+        //console.log("Jugador añadido:", nuevoJugador);
+        console.log("Jugadores actuales:", jugadores);
 
         actualizarListaJugadores(); // Refrescar la lista
         actualizarMedia(jugadores); // Actualizar la media de tiempos después de añadir un jugador
@@ -193,34 +204,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calcular la media de las puntuaciones
     let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
-
     avgScore.innerHTML = mediaTotal.toFixed(2);
 
-    let jugadorFinal = jugadores.length-1;
+    let jugadorFinal = jugadores.length - 1;
     let puntuacionJugador;
-    if(jugadores.length>0){
+    if (jugadores.length > 0) {
         puntuacionJugador = jugadores[jugadorFinal].puntuacio;
     }
     puntosJugador.innerHTML = puntuacionJugador;
     
-
-
-    // Anadir nuevo jugador via Prompts
+    // Añadir nuevo jugador vía Prompts
     let btnAddPlayer = document.getElementById('addNewPlayer');
     btnAddPlayer.addEventListener('click', () => {
         jugadores = addPlayer(jugadores); // Reasignamos el array con el nuevo jugador
         guardarJugadores(jugadores); // Guardamos en LocalStorage
         actualizarListaJugadores(); // Actualizamos la lista en el DOM
         mostrarMejoresTiempos(jugadores);
-
     });
 
-    // Borrar el ultimo elemento por Indice
+    // Borrar el último elemento por índice
     let btnRemoveLastPlayer = document.getElementById('removeLastPlayer');
     btnRemoveLastPlayer.addEventListener('click', () => {
         removeLastElement(jugadores);
         guardarJugadores(jugadores);
-        actualizarListaJugadores(); // Actualizamos la lista en el DOM
+        actualizarListaJugadores();
         mostrarMejoresTiempos(jugadores);
     });
     
@@ -228,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRemoveFirstPlayer.addEventListener('click', () => {
         removeFirstElement(jugadores);
         guardarJugadores(jugadores);
-        actualizarListaJugadores(); // Actualizamos la lista en el DOM
+        actualizarListaJugadores();
         mostrarMejoresTiempos(jugadores);
     });
 
@@ -241,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Media tiempo
     actualizarMedia(getJugadores());
-
     actualizarListaJugadores();
 
     // Volver al test
@@ -249,7 +255,11 @@ document.addEventListener('DOMContentLoaded', () => {
         location.reload();
     });
 
-    console.log('Successfully Connected to main.js');
+
+// Mostrar el Map de partidas en formato tabla
+console.log("Partidas:");
+console.table([...partidas.entries()].map(([id, partida]) => ({ ID: id, ...partida })));
+
 
 
     const createDefaultTests = () => {
@@ -357,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         // Almacenar globalmente la respuesta correcta (el tipo de la figura faltante)
         window.correctOption = selectedTest.figuras[3].tipoFigura;
-        console.log("Respuesta correcta:", window.correctOption);
+        //console.log("Respuesta correcta:", window.correctOption);
     }
     
     // Inicializamos los tests y guardamos el Set globalmente
@@ -367,11 +377,4 @@ document.addEventListener('DOMContentLoaded', () => {
             loadRandomTest(); // Cargar el primer test
         }
     });
-    
-
-
-
-
 });
-
-
