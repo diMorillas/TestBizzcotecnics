@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     nextTest.innerHTML = 'Finalizar';
                     tiempoFinal = Date.now(); // Guardamos el tiempo exacto cuando se finaliza el test
                     setTimeout(() => {
+                        document.body.classList.remove('timeout');        
                         pageTest.style.display = 'none';
                         clearInterval(countdown);  // Limpiar el temporizador
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
