@@ -260,37 +260,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //indexedDB
 
-    const createDefaultTests = () => {
+    // const createDefaultTests = () => {
+    //     return [
+    //         new Test([
+    //             new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
+    //             new figuraHots(2, "./assets/images/hots.png", "hots"),
+    //             new figuraWow(3, "./assets/images/wow.svg", "Wow"),
+    //             new figuraOverwatch(4, "./assets/images/ow.svg", "ow")
+
+    //         ], 1,1),
+    //         new Test([
+    //             new figuraHots(5, "./assets/images/hots.png", "hots"),
+    //             new figuraOverwatch(6, "./assets/images/ow.svg", "ow"),
+    //             new figuraHeartStone(7, "./assets/images/hs.svg", "hs"),
+    //             new figuraWow(8, "./assets/images/wow.svg", "wow")
+
+    //         ], 2,1),
+    //         new Test([
+    //             new figuraHots(9, "./assets/images/hots.png", "hots"),
+    //             new figuraHots(10, "./assets/images/hots.png", "hots"),
+    //             new figuraWow(11, "./assets/images/wow.svg", "wow"),
+    //             new figuraWow(12, "./assets/images/wow.svg", "wow")
+    //         ], 3,1),
+    //         new Test([
+    //             new figuraOverwatch(13, "./assets/images/ow.svg", "ow"),
+    //             new figuraHots(14, "./assets/images/hots.png", "hots"),
+    //             new figuraWow(15, "./assets/images/wow.svg", "wow"),
+    //             new figuraHeartStone(16, "./assets/images/hs.svg", "hs")
+    //         ], 4,1)
+    //     ];
+    // };
+    
+    Test.prototype.createDefaultTests = function() {
         return [
             new Test([
                 new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
                 new figuraHots(2, "./assets/images/hots.png", "hots"),
                 new figuraWow(3, "./assets/images/wow.svg", "Wow"),
                 new figuraOverwatch(4, "./assets/images/ow.svg", "ow")
-
-            ], 1,1),
+            ], 1, 1),
             new Test([
                 new figuraHots(5, "./assets/images/hots.png", "hots"),
                 new figuraOverwatch(6, "./assets/images/ow.svg", "ow"),
                 new figuraHeartStone(7, "./assets/images/hs.svg", "hs"),
                 new figuraWow(8, "./assets/images/wow.svg", "wow")
-
-            ], 2,1),
+            ], 2, 1),
             new Test([
                 new figuraHots(9, "./assets/images/hots.png", "hots"),
                 new figuraHots(10, "./assets/images/hots.png", "hots"),
                 new figuraWow(11, "./assets/images/wow.svg", "wow"),
                 new figuraWow(12, "./assets/images/wow.svg", "wow")
-            ], 3,1),
+            ], 3, 1),
             new Test([
                 new figuraOverwatch(13, "./assets/images/ow.svg", "ow"),
                 new figuraHots(14, "./assets/images/hots.png", "hots"),
                 new figuraWow(15, "./assets/images/wow.svg", "wow"),
                 new figuraHeartStone(16, "./assets/images/hs.svg", "hs")
-            ], 4,1)
+            ], 4, 1)
         ];
     };
     
+    // Para usarlo:
+    const tests = new Test().createDefaultTests();
+    console.log(tests);
+    
+
+
+
 
     const getRandomTests = (tests) => {
         const randomIndexes = [];
@@ -310,7 +346,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const randomTests = getRandomTests(tests);
                 return randomTests;
             } else {
-                const newTests = createDefaultTests();
+                // const newTests = createDefaultTests();
+                const tests = new Test().createDefaultTests();
                 for (let test of newTests) {
                     await indexedDbManager("addTest", test);
                 }
