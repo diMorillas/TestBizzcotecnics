@@ -542,6 +542,7 @@ function loadRandomTest() {
 
     const randomIndex = Math.floor(Math.random() * testArray.length);
     const selectedTest = testArray[randomIndex];
+    console.log(`test seleccionado: ${selectedTest}`);
 
     if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
         console.error("El test seleccionado no tiene suficientes figuras.");
