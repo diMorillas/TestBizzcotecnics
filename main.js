@@ -4,7 +4,6 @@ import { addPlayer,removeLastElement,removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
 import { indexedDbManager, operaciones } from './indexedDbManager.js';
 import { Test } from "./test.js";
-import { Figura } from "./figura.js";
 import { figuraHeartStone } from "./figuraHeartStone.js";
 import { figuraWow } from "./figuraWow.js";
 import { figuraHots } from "./figuraHots.js";
@@ -24,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAgain = document.getElementById('newTest');
     const signTime = document.getElementById('signTime');
     const music = document.getElementById('bg-music');
+    const avgScore = document.getElementById('mediaPuntuacion');
+    const puntosJugador = document.getElementById('puntosJugador');
 
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -67,21 +68,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     testCounter++;
                     numberTest.innerHTML = `${testCounter}/3`;
                     nextTest.innerHTML = testCounter === 3 ? 'Finalizar' : 'Siguiente';
-                } else {
+                                    
+                    loadRandomTest();
+                }
+                else {
                     numberTest.innerHTML = "3/3";
                     nextTest.innerHTML = 'Finalizar';
                     tiempoFinal = Date.now(); // Guardamos el tiempo exacto cuando se finaliza el test
-
                     setTimeout(() => {
                         pageTest.style.display = 'none';
                         clearInterval(countdown);  // Limpiar el temporizador
                         console.log('Cuenta regresiva terminada de manera satisfactoria');
                         pageForm.style.display = 'block';
+
                     }, 500);
+
                 }
             });
         }
     }
+    
 
     // Obtener jugadores del LocalStorage
     function getJugadores() {
@@ -107,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnForm.addEventListener('click', () => {
         const nameForm = document.getElementById('nameForm').value.trim();
         const emailForm = document.getElementById('emailForm').value.trim();
-
+        //regex 
         const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -123,11 +129,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Calcular el tiempo transcurrido en segundos
         const tiempoTest = Math.floor((tiempoFinal - startTime) / 1000);  // Usamos el tiempo final al finalizar el test
+        let currentScore = sessionStorage.getItem('score') || 0;
 
-        const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, 0);
+        const nuevoJugador = new Jugador(nameForm, emailForm, tiempoTest, parseInt(currentScore));
 
         jugadores.push(nuevoJugador);
         guardarJugadores(jugadores);
+        sessionStorage.setItem('score',0);
+        
+                // Crear un array de puntuaciones
+        let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
+
+        // Calcular la media de las puntuaciones
+        let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
+
+        avgScore.innerHTML = mediaTotal.toFixed(2);
+
+        let jugadorFinal = jugadores.length-1;
+        let puntuacionJugador;
+        if(jugadores.length>0){
+            puntuacionJugador = jugadores[jugadorFinal].puntuacio;
+        }
+        puntosJugador.innerHTML = puntuacionJugador;
+
+
+
 
         console.log("Jugador añadido:", nuevoJugador); // Log para verificar el jugador añadido
         console.log("Jugadores actuales:", jugadores); // Log para verificar la lista de jugadores
@@ -153,13 +179,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         jugadores.forEach(jugador => {
             const li = document.createElement('li');
-            li.textContent = `${jugador.nombre}       ${jugador.tiempo} segundos`;
+            li.textContent = `${jugador.nombre} ${jugador.tiempo} segundos`;
             playerList.appendChild(li);
         });
 
         // Actualizar la media de tiempos
         actualizarMedia(jugadores);
     }
+
+    // Crear un array de puntuaciones
+    let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
+
+    // Calcular la media de las puntuaciones
+    let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
+
+    avgScore.innerHTML = mediaTotal.toFixed(2);
+
+    let jugadorFinal = jugadores.length-1;
+    let puntuacionJugador;
+    if(jugadores.length>0){
+        puntuacionJugador = jugadores[jugadorFinal].puntuacio;
+    }
+    puntosJugador.innerHTML = puntuacionJugador;
+    
 
 
     // Anadir nuevo jugador via Prompts
@@ -214,28 +256,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const createDefaultTests = () => {
         return [
             new Test([
-                new figuraOverwatch(1, "./assets/images/ow.svg", "OverWatch"),
-                new figuraHots(2, "./assets/images/hots.png", "Hots"),
-                new figuraWow(3, "./assets/images/wow.png", "Wow"),
-                new figuraHeartStone(4, "./assets/images/heartstone.png", "Heartstone")
+                new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
+                new figuraHots(2, "./assets/images/hots.png", "hots"),
+                new figuraWow(3, "./assets/images/wow.svg", "Wow"),
+                new figuraOverwatch(4, "./assets/images/ow.svg", "ow")
+
             ], 1,1),
             new Test([
-                new figuraOverwatch(5, "./assets/images/ow.svg", "OverWatch"),
-                new figuraHots(6, "./assets/images/hots.png", "Hots"),
-                new figuraWow(7, "./assets/images/wow.png", "Wow"),
-                new figuraHeartStone(8, "./assets/images/heartstone.png", "Heartstone")
+                new figuraHots(5, "./assets/images/hots.png", "hots"),
+                new figuraOverwatch(6, "./assets/images/ow.svg", "ow"),
+                new figuraHeartStone(7, "./assets/images/hs.svg", "hs"),
+                new figuraWow(8, "./assets/images/wow.svg", "wow")
+
             ], 2,1),
             new Test([
-                new figuraOverwatch(9, "./assets/images/ow.svg", "OverWatch"),
-                new figuraHots(10, "./assets/images/hots.png", "Hots"),
-                new figuraWow(11, "./assets/images/wow.png", "Wow"),
-                new figuraHeartStone(12, "./assets/images/heartstone.png", "Heartstone")
+                new figuraHots(9, "./assets/images/hots.png", "hots"),
+                new figuraHots(10, "./assets/images/hots.png", "hots"),
+                new figuraWow(11, "./assets/images/wow.svg", "wow"),
+                new figuraWow(12, "./assets/images/wow.svg", "wow")
             ], 3,1),
             new Test([
-                new figuraOverwatch(13, "./assets/images/ow.svg", "OverWatch"),
-                new figuraHots(14, "./assets/images/hots.png", "Hots"),
-                new figuraWow(15, "./assets/images/wow.png", "Wow"),
-                new figuraHeartStone(16, "./assets/images/heartstone.png", "Heartstone")
+                new figuraOverwatch(13, "./assets/images/ow.svg", "ow"),
+                new figuraHots(14, "./assets/images/hots.png", "hots"),
+                new figuraWow(15, "./assets/images/wow.svg", "wow"),
+                new figuraHeartStone(16, "./assets/images/hs.svg", "hs")
             ], 4,1)
         ];
     };
@@ -269,13 +313,53 @@ document.addEventListener('DOMContentLoaded', () => {
             return null;
         }
     };
+// Variable global para almacenar el Set de tests aleatorios
+let randomTestsGlobal = null;
 
-    hasTest().then(randomTests => {
-        if (randomTests) {
-            // Aquí puedes trabajar con el Set de tests
-            console.log(randomTests);
-        }
-    });
+// Función para cargar un test aleatorio
+function loadRandomTest() {
+  if (!randomTestsGlobal) {
+    console.error("No hay tests cargados");
+    return;
+  }
+  const testArray = Array.from(randomTestsGlobal);
+  const randomIndex = Math.floor(Math.random() * testArray.length);
+  const selectedTest = testArray[randomIndex];
+  console.log("Test seleccionado:", selectedTest);
+
+  if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
+    console.error("El test seleccionado no tiene suficientes figuras.");
+    return;
+  }
+
+  // Limpiar el contenedor (por ejemplo, el cuarto contenedor)
+  const figureFour = document.querySelector('.figureFour');
+  figureFour.innerHTML = "";
+
+  // Seleccionar los elementos del DOM para las figuras
+  const figureOne = document.querySelector('.figureOne img');
+  const figureTwo = document.querySelector('.figureTwo img');
+  const figureThree = document.querySelector('.figureThree img');
+
+  // Asignar las imágenes a los contenedores correspondientes
+  figureOne.src = selectedTest.figuras[0].urlFigura;
+  figureTwo.src = selectedTest.figuras[1].urlFigura;
+  figureThree.src = selectedTest.figuras[2].urlFigura;
+
+  // Almacenar globalmente la respuesta correcta (el tipo de la figura faltante)
+  window.correctOption = selectedTest.figuras[3].tipoFigura;
+  console.log("Respuesta correcta:", window.correctOption);
+}
+
+// Inicializamos los tests y guardamos el Set globalmente
+hasTest().then(rt => {
+  if (rt) {
+    randomTestsGlobal = rt;
+    loadRandomTest(); // Cargar el primer test
+  }
+});
+
+
 
 
 });
