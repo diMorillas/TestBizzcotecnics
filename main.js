@@ -269,7 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
     // const createDefaultTests = () => {
     //     return [
     //         new Test([
@@ -330,11 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
     };
     
-    // Para usarlo:
-    const tests = new Test().createDefaultTests();
-    console.log(tests);
-    
-
 
 
 
@@ -356,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return getRandomTests(tests);
             } else {
                 // const newTests = createDefaultTests();
-                const tests = new Test().createDefaultTests();
+                const newTests = new Test().createDefaultTests();
                 for (let test of newTests) {
                     await indexedDbManager("addTest", test);
                 }

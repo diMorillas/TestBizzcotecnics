@@ -47,7 +47,7 @@ export const operaciones = {
     getAllTests: (store) => store.getAll(),
 };
 
-export const indexedDbManager = async (operation, data = null) => {
+export async function indexedDbManager(operation, data = null){
     try {
         console.log("he entrado en la función");
         const db = await openDB();
