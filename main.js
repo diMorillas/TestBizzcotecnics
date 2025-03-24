@@ -137,8 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
         guardarJugadores(jugadores);
         sessionStorage.setItem('score',0);
         
-                // Crear un array de puntuaciones
-        let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
+        //         // Crear un array de puntuaciones
+        // let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
+
+        let puntuaciones = [];
+        for (let i in jugadores) {
+            puntuaciones.push(jugadores[i].puntuacio);
+        }
+        console.log(puntuaciones);
+
 
         // Calcular la media de las puntuaciones
         let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
