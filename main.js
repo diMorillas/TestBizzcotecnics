@@ -377,4 +377,7 @@ console.table([...partidas.entries()].map(([id, partida]) => ({ ID: id, ...parti
             loadRandomTest(); // Cargar el primer test
         }
     });
+
+
+    //Prototype Figura
 });
