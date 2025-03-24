@@ -317,137 +317,172 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Partidas:");
     console.table([...partidas.entries()].map(([id, partida]) => ({ ID: id, ...partida })));
 
-    /**
-     * Método que extiende la funcionalidad de Test para crear tests por defecto.
-     * @returns {Array<Test>} Array de tests predeterminados.
-     */
-    Test.prototype.createDefaultTests = function() {
-        return [
-            new Test([
-                new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
-                new figuraHots(2, "./assets/images/hots.png", "hots"),
-                new figuraWow(3, "./assets/images/wow.svg", "Wow"),
-                new figuraOverwatch(4, "./assets/images/ow.svg", "ow")
-            ], 1, 1),
-            new Test([
-                new figuraHots(5, "./assets/images/hots.png", "hots"),
-                new figuraOverwatch(6, "./assets/images/ow.svg", "ow"),
-                new figuraHeartStone(7, "./assets/images/hs.svg", "hs"),
-                new figuraWow(8, "./assets/images/wow.svg", "wow")
-            ], 2, 1),
-            new Test([
-                new figuraHots(9, "./assets/images/hots.png", "hots"),
-                new figuraHots(10, "./assets/images/hots.png", "hots"),
-                new figuraWow(11, "./assets/images/wow.svg", "wow"),
-                new figuraWow(12, "./assets/images/wow.svg", "wow")
-            ], 3, 1),
-            new Test([
-                new figuraOverwatch(13, "./assets/images/ow.svg", "ow"),
-                new figuraHots(14, "./assets/images/hots.png", "hots"),
-                new figuraWow(15, "./assets/images/wow.svg", "wow"),
-                new figuraHeartStone(16, "./assets/images/hs.svg", "hs")
-            ], 4, 1)
-        ];
-    };
-    
-    /**
-     * Selecciona de forma aleatoria 4 tests de un array de tests.
-     * @param {Array<Test>} tests - Array de tests disponibles.
-     * @returns {Set<Test>} Conjunto de tests aleatorios.
-     */
-    const getRandomTests = (tests) => {
-        const randomIndexes = [];
-        while (randomIndexes.length < 4) {
-            const randomIndex = Math.floor(Math.random() * tests.length);
-            if (!randomIndexes.includes(randomIndex)) {
-                randomIndexes.push(randomIndex);
-            }
-        }
-        return new Set(randomIndexes.map(index => tests[index]));
-    };
-    
-    /**
-     * Función asíncrona para obtener tests desde IndexedDB.
-     * Si no hay tests almacenados, crea tests por defecto.
-     * @async
-     * @returns {Promise<Set<Test>|null>} Conjunto de tests aleatorios o null en caso de error.
-     */
-    const hasTest = async () => {
-        try {
-            const tests = await indexedDbManager("getAllTests");
-            if (tests && tests.length > 0) {
-                return getRandomTests(tests);
-            } else {
-                const newTests = new Test().createDefaultTests();
-                for (let test of newTests) {
-                    await indexedDbManager("addTest", test);
-                }
-                const updatedTests = await indexedDbManager("getAllTests");
-                return getRandomTests(updatedTests);
-            }
-        } catch (error) {
-            console.error("Error obteniendo los tests:", error);
-            return null;
-        }
-    };
-    
-    // Variable global para almacenar el Set de tests aleatorios
-    let randomTestsGlobal = null;
-    
-    /**
-     * Carga un test aleatorio en el DOM a partir del conjunto global de tests.
-     * Actualiza las imágenes de las figuras y almacena la respuesta correcta.
-     */
-    function loadRandomTest() {
-        if (!randomTestsGlobal) {
-            console.error("No hay tests cargados");
-            return;
-        }
-    
-        const testArray = Array.from(randomTestsGlobal);
-        if (testArray.length === 0) {
-            console.error("No hay tests disponibles.");
-            return;
-        }
-    
-        const randomIndex = Math.floor(Math.random() * testArray.length);
-        const selectedTest = testArray[randomIndex];
-    
-        if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
-            console.error("El test seleccionado no tiene suficientes figuras.");
-            return;
-        }
-    
-        // Limpiar el contenedor (por ejemplo, el contenedor de la cuarta figura)
-        const figureFour = document.querySelector('.figureFour');
-        if (figureFour) figureFour.innerHTML = "";
-    
-        // Seleccionar los elementos del DOM para las figuras
-        const figureOne = document.querySelector('.figureOne img') || document.createElement("img");
-        const figureTwo = document.querySelector('.figureTwo img') || document.createElement("img");
-        const figureThree = document.querySelector('.figureThree img') || document.createElement("img");
-    
-        // Asignar las imágenes a los contenedores correspondientes
-        figureOne.src = selectedTest.figuras[0].urlFigura;
-        figureTwo.src = selectedTest.figuras[1].urlFigura;
-        figureThree.src = selectedTest.figuras[2].urlFigura;
-    
-        // Si los elementos img no estaban en el DOM, se agregan a sus contenedores
-        document.querySelector('.figureOne')?.appendChild(figureOne);
-        document.querySelector('.figureTwo')?.appendChild(figureTwo);
-        document.querySelector('.figureThree')?.appendChild(figureThree);
-    
-        // Almacenar globalmente la respuesta correcta (tipo de la figura faltante)
-        window.correctOption = selectedTest.figuras[3].tipoFigura;
-    }
-    
-    // Inicializar tests y cargar el primer test
-    hasTest().then(rt => {
-        if (rt) {
-            randomTestsGlobal = rt;
-            loadRandomTest();
-        }
-    });
+   /**
+ * Método que extiende la funcionalidad de Test para crear tests por defecto.
+ * @returns {Array<Test>} Array de tests predeterminados.
+ */
+Test.prototype.createDefaultTests = function() {
+    return [
+        new Test([
+            new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
+            new figuraHots(2, "./assets/images/hots.png", "hots"),
+            new figuraWow(3, "./assets/images/wow.svg", "Wow"),
+            new figuraOverwatch(4, "./assets/images/ow.svg", "ow")
+        ], 1, 1),
+        new Test([
+            new figuraHots(5, "./assets/images/hots.png", "hots"),
+            new figuraOverwatch(6, "./assets/images/ow.svg", "ow"),
+            new figuraHeartStone(7, "./assets/images/hs.svg", "hs"),
+            new figuraWow(8, "./assets/images/wow.svg", "wow")
+        ], 2, 1),
+        new Test([
+            new figuraHots(9, "./assets/images/hots.png", "hots"),
+            new figuraHots(10, "./assets/images/hots.png", "hots"),
+            new figuraWow(11, "./assets/images/wow.svg", "wow"),
+            new figuraWow(12, "./assets/images/wow.svg", "wow")
+        ], 3, 1),
+        new Test([
+            new figuraOverwatch(13, "./assets/images/ow.svg", "ow"),
+            new figuraHots(14, "./assets/images/hots.png", "hots"),
+            new figuraWow(15, "./assets/images/wow.svg", "wow"),
+            new figuraHeartStone(16, "./assets/images/hs.svg", "hs")
+        ], 4, 1),
+        new Test([
+            new figuraHeartStone(17, "./assets/images/hs.svg", "hs"),
+            new figuraHeartStone(18, "./assets/images/hs.svg", "hs"),
+            new figuraHeartStone(19, "./assets/images/hs.svg", "hs"),
+            new figuraHeartStone(20, "./assets/images/hs.svg", "hs")
+        ], 5, 1),
+        new Test([
+            new figuraWow(21, "./assets/images/wow.svg", "wow"),
+            new figuraWow(22, "./assets/images/wow.svg", "wow"),
+            new figuraHeartStone(23, "./assets/images/hs.svg", "hs"),
+            new figuraHots(24, "./assets/images/hots.png", "hots")
+        ], 6, 1),
+        new Test([
+            new figuraHots(25, "./assets/images/hots.png", "hots"),
+            new figuraHots(26, "./assets/images/hots.png", "hots"),
+            new figuraOverwatch(27, "./assets/images/ow.svg", "ow"),
+            new figuraOverwatch(28, "./assets/images/ow.svg", "ow")
+        ], 7, 1),
+        new Test([
+            new figuraWow(29, "./assets/images/wow.svg", "wow"),
+            new figuraWow(30, "./assets/images/wow.svg", "wow"),
+            new figuraWow(31, "./assets/images/wow.svg", "wow"),
+            new figuraWow(32, "./assets/images/wow.svg", "wow")
+        ], 8, 1),
+        new Test([
+            new figuraHeartStone(33, "./assets/images/hs.svg", "hs"),
+            new figuraHeartStone(34, "./assets/images/hs.svg", "hs"),
+            new figuraWow(35, "./assets/images/wow.svg", "wow"),
+            new figuraOverwatch(36, "./assets/images/ow.svg", "ow")
+        ], 9, 1),
+        new Test([
+            new figuraOverwatch(37, "./assets/images/ow.svg", "ow"),
+            new figuraOverwatch(38, "./assets/images/ow.svg", "ow"),
+            new figuraOverwatch(39, "./assets/images/ow.svg", "ow"),
+            new figuraOverwatch(40, "./assets/images/ow.svg", "ow")
+        ], 10, 1)
+    ];
+};
 
-    // Fin de la documentación y del código principal
+/**
+ * Selecciona de forma aleatoria 4 tests de un array de tests.
+ * @param {Array<Test>} tests - Array de tests disponibles.
+ * @returns {Set<Test>} Conjunto de tests aleatorios.
+ */
+const getRandomTests = (tests) => {
+    const randomIndexes = [];
+    while (randomIndexes.length < 4) {
+        const randomIndex = Math.floor(Math.random() * tests.length);
+        if (!randomIndexes.includes(randomIndex)) {
+            randomIndexes.push(randomIndex);
+        }
+    }
+    return new Set(randomIndexes.map(index => tests[index]));
+};
+
+/**
+ * Función asíncrona para obtener tests desde IndexedDB.
+ * Si no hay tests almacenados, crea tests por defecto.
+ * @async
+ * @returns {Promise<Set<Test>|null>} Conjunto de tests aleatorios o null en caso de error.
+ */
+const hasTest = async () => {
+    try {
+        const tests = await indexedDbManager("getAllTests");
+        if (tests && tests.length > 0) {
+            return getRandomTests(tests);
+        } else {
+            const newTests = new Test().createDefaultTests();
+            for (let test of newTests) {
+                await indexedDbManager("addTest", test);
+            }
+            const updatedTests = await indexedDbManager("getAllTests");
+            return getRandomTests(updatedTests);
+        }
+    } catch (error) {
+        console.error("Error obteniendo los tests:", error);
+        return null;
+    }
+};
+
+// Variable global para almacenar el Set de tests aleatorios
+let randomTestsGlobal = null;
+
+/**
+ * Carga un test aleatorio en el DOM a partir del conjunto global de tests.
+ * Actualiza las imágenes de las figuras y almacena la respuesta correcta.
+ */
+function loadRandomTest() {
+    if (!randomTestsGlobal) {
+        console.error("No hay tests cargados");
+        return;
+    }
+
+    const testArray = Array.from(randomTestsGlobal);
+    if (testArray.length === 0) {
+        console.error("No hay tests disponibles.");
+        return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * testArray.length);
+    const selectedTest = testArray[randomIndex];
+
+    if (!selectedTest || !selectedTest.figuras || selectedTest.figuras.length < 4) {
+        console.error("El test seleccionado no tiene suficientes figuras.");
+        return;
+    }
+
+    // Limpiar el contenedor (por ejemplo, el contenedor de la cuarta figura)
+    const figureFour = document.querySelector('.figureFour');
+    if (figureFour) figureFour.innerHTML = "";
+
+    // Seleccionar los elementos del DOM para las figuras
+    const figureOne = document.querySelector('.figureOne img') || document.createElement("img");
+    const figureTwo = document.querySelector('.figureTwo img') || document.createElement("img");
+    const figureThree = document.querySelector('.figureThree img') || document.createElement("img");
+
+    // Asignar las imágenes a los contenedores correspondientes
+    figureOne.src = selectedTest.figuras[0].urlFigura;
+    figureTwo.src = selectedTest.figuras[1].urlFigura;
+    figureThree.src = selectedTest.figuras[2].urlFigura;
+
+    // Si los elementos img no estaban en el DOM, se agregan a sus contenedores
+    document.querySelector('.figureOne')?.appendChild(figureOne);
+    document.querySelector('.figureTwo')?.appendChild(figureTwo);
+    document.querySelector('.figureThree')?.appendChild(figureThree);
+
+    // Almacenar globalmente la respuesta correcta (tipo de la figura faltante)
+    window.correctOption = selectedTest.figuras[3].tipoFigura;
+}
+
+// Inicializar tests y cargar el primer test
+hasTest().then(rt => {
+    if (rt) {
+        randomTestsGlobal = rt;
+        loadRandomTest();
+    }
+});
+
 });
