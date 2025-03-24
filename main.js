@@ -1,4 +1,4 @@
-import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
+import { actualizarMedia, mostrarMejoresTiempos,mostrarDetallesPorTiempo, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { addPlayer,removeLastElement,removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //let partidas = new Map(); // Cada vez que finaliza una partida con el boton finalizar, se añade con un ID autoincremental.
 
     initDragAndDrop();
+    
+
+
+
 
     // Al hacer clic en el botón de aceptación, iniciamos el test
     acceptButton.addEventListener('click', () => {
@@ -277,6 +281,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Llamada al evento del botón para mostrar detalles por tiempo
+document.getElementById("playerData").addEventListener("click", () => {
+    mostrarDetallesPorTiempo(jugadores); // Pasa la lista de jugadores
+});
 
 });
 

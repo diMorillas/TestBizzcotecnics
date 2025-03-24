@@ -23,12 +23,16 @@ export class Jugador extends Persona {
     }
 
     // Sobrescribe el método getDetalle para dar más detalles sobre el jugador
-    // Si se pasa un tiempo, muestra los detalles del jugador con ese tiempo
+    getDetalle() {
+        return `${super.getDetalle()}, Tiempo: ${this.tiempo} segundos, Puntuación: ${this.puntuacion}`;
+    }
+
+    // Método estático para obtener los detalles de un jugador basado en el tiempo
     static getDetalle(tiempo, jugadores) {
         const jugadorEncontrado = jugadores.find(jugador => jugador.tiempo === tiempo);
 
         if (jugadorEncontrado) {
-            return `${jugadorEncontrado.getDetalle()}, Tiempo: ${jugadorEncontrado.tiempo} segundos, Puntuación: ${jugadorEncontrado.puntuacion}`;
+            return jugadorEncontrado.getDetalle(); // Llama al método getDetalle de la instancia de Jugador
         } else {
             return "No se encontró un jugador con ese tiempo.";
         }
@@ -52,19 +56,19 @@ export function media(array) {
 
 // Función para actualizar la media en el HTML
 export function actualizarMedia(jugadores) {
-    if (!jugadores || jugadores.size === 0) { // Cambiar .length por .size
+    if (!jugadores || jugadores.length === 0) {
         document.getElementById("media").textContent = "N/A";
         return;
     }
 
-    const tiempos = Array.from(jugadores.values()).map(jugador => jugador.tiempo);
+    const tiempos = jugadores.map(jugador => jugador.tiempo);
     const mediaTiempo = media(tiempos);
     document.getElementById("media").textContent = mediaTiempo.toFixed(0) + " segundos";
 }
 
 // Función para filtrar los jugadores con mejor puntuación (menor a 10 segundos)
 export function mostrarMejoresTiempos(jugadores) {
-    const mejoresJugadores = Array.from(jugadores.values()).filter(jugador => jugador.tiempo < 10);
+    const mejoresJugadores = jugadores.filter(jugador => jugador.tiempo < 10);
 
     const playerBestTimes = document.getElementById('playerBestTimes');
     playerBestTimes.innerHTML = mejoresJugadores.length === 0
@@ -72,4 +76,19 @@ export function mostrarMejoresTiempos(jugadores) {
         : mejoresJugadores.map(jugador => `<li>${jugador.nombre} - ${jugador.tiempo} segundos</li>`).join('');
 }
 
-
+// Función que se ejecutará cuando el botón sea clickeado
+export function mostrarDetallesPorTiempo(jugadores) {
+    // Pedimos el tiempo al usuario mediante un prompt
+    const tiempo = parseFloat(prompt("Introduce el tiempo del jugador que quieres ver:"));
+    
+    // Verificamos que el tiempo ingresado es un número
+    if (!isNaN(tiempo)) {
+        // Llamamos al método estático getDetalle de la clase Jugador
+        const detalle = Jugador.getDetalle(tiempo, jugadores);
+        
+        // Mostramos los detalles en un alert (puedes usar console.log también)
+        alert(detalle);
+    } else {
+        alert("Por favor, introduce un número válido.");
+    }
+}
