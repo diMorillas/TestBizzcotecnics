@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let startTime = Date.now(); // Guardamos el tiempo de inicio
     let arrowTime = true;
 
+    let partidas = new Map(); // Cada vez que finaliza una partida con el boton finalizar, se añade con un ID autoincremental.
+
     initDragAndDrop();
 
     // Al hacer clic en el botón de aceptación, iniciamos el test
