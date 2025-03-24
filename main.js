@@ -318,10 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.table([...partidas.entries()].map(([id, partida]) => ({ ID: id, ...partida })));
 
    /**
- * Método que extiende la funcionalidad de Test para crear tests por defecto.
+ * Método que extiende la funcionalidad de Test para crear tests por defecto. (25 tests por defecto)
  * @returns {Array<Test>} Array de tests predeterminados.
  */
-Test.prototype.createDefaultTests = function() {
+   Test.prototype.createDefaultTests = function() {
     return [
         new Test([
             new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
@@ -382,25 +382,121 @@ Test.prototype.createDefaultTests = function() {
             new figuraOverwatch(38, "./assets/images/ow.svg", "ow"),
             new figuraOverwatch(39, "./assets/images/ow.svg", "ow"),
             new figuraOverwatch(40, "./assets/images/ow.svg", "ow")
-        ], 10, 1)
+        ], 10, 1),
+        
+        // Tests nuevos (20)
+        new Test([
+            new figuraHeartStone(41, "./assets/images/hs.svg", "hs"),
+            new figuraHots(42, "./assets/images/hots.png", "hots"),
+            new figuraOverwatch(43, "./assets/images/ow.svg", "ow"),
+            new figuraWow(44, "./assets/images/wow.svg", "wow")
+        ], 11, 1),
+        new Test([
+            new figuraWow(45, "./assets/images/wow.svg", "wow"),
+            new figuraHots(46, "./assets/images/hots.png", "hots"),
+            new figuraHeartStone(47, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(48, "./assets/images/ow.svg", "ow")
+        ], 12, 1),
+        new Test([
+            new figuraHeartStone(49, "./assets/images/hs.svg", "hs"),
+            new figuraHots(50, "./assets/images/hots.png", "hots"),
+            new figuraWow(51, "./assets/images/wow.svg", "wow"),
+            new figuraOverwatch(52, "./assets/images/ow.svg", "ow")
+        ], 13, 1),
+        new Test([
+            new figuraHots(53, "./assets/images/hots.png", "hots"),
+            new figuraHeartStone(54, "./assets/images/hs.svg", "hs"),
+            new figuraWow(55, "./assets/images/wow.svg", "wow"),
+            new figuraOverwatch(56, "./assets/images/ow.svg", "ow")
+        ], 14, 1),
+        new Test([
+            new figuraHeartStone(57, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(58, "./assets/images/ow.svg", "ow"),
+            new figuraWow(59, "./assets/images/wow.svg", "wow"),
+            new figuraHots(60, "./assets/images/hots.png", "hots")
+        ], 15, 1),
+        new Test([
+            new figuraWow(61, "./assets/images/wow.svg", "wow"),
+            new figuraHeartStone(62, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(63, "./assets/images/ow.svg", "ow"),
+            new figuraHots(64, "./assets/images/hots.png", "hots")
+        ], 16, 1),
+        new Test([
+            new figuraOverwatch(65, "./assets/images/ow.svg", "ow"),
+            new figuraHeartStone(66, "./assets/images/hs.svg", "hs"),
+            new figuraHots(67, "./assets/images/hots.png", "hots"),
+            new figuraWow(68, "./assets/images/wow.svg", "wow")
+        ], 17, 1),
+        new Test([
+            new figuraHots(69, "./assets/images/hots.png", "hots"),
+            new figuraOverwatch(70, "./assets/images/ow.svg", "ow"),
+            new figuraHeartStone(71, "./assets/images/hs.svg", "hs"),
+            new figuraWow(72, "./assets/images/wow.svg", "wow")
+        ], 18, 1),
+        new Test([
+            new figuraWow(73, "./assets/images/wow.svg", "wow"),
+            new figuraHots(74, "./assets/images/hots.png", "hots"),
+            new figuraHeartStone(75, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(76, "./assets/images/ow.svg", "ow")
+        ], 19, 1),
+        new Test([
+            new figuraHeartStone(77, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(78, "./assets/images/ow.svg", "ow"),
+            new figuraWow(79, "./assets/images/wow.svg", "wow"),
+            new figuraHots(80, "./assets/images/hots.png", "hots")
+        ], 20, 1),
+        new Test([
+            new figuraWow(81, "./assets/images/wow.svg", "wow"),
+            new figuraHeartStone(82, "./assets/images/hs.svg", "hs"),
+            new figuraHots(83, "./assets/images/hots.png", "hots"),
+            new figuraOverwatch(84, "./assets/images/ow.svg", "ow")
+        ], 21, 1),
+        new Test([
+            new figuraHots(85, "./assets/images/hots.png", "hots"),
+            new figuraHeartStone(86, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(87, "./assets/images/ow.svg", "ow"),
+            new figuraWow(88, "./assets/images/wow.svg", "wow")
+        ], 22, 1),
+        new Test([
+            new figuraHeartStone(89, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(90, "./assets/images/ow.svg", "ow"),
+            new figuraWow(91, "./assets/images/wow.svg", "wow"),
+            new figuraHots(92, "./assets/images/hots.png", "hots")
+        ], 23, 1),
+        new Test([
+            new figuraOverwatch(93, "./assets/images/ow.svg", "ow"),
+            new figuraHeartStone(94, "./assets/images/hs.svg", "hs"),
+            new figuraWow(95, "./assets/images/wow.svg", "wow"),
+            new figuraHots(96, "./assets/images/hots.png", "hots")
+        ], 24, 1),
+        new Test([
+            new figuraHots(97, "./assets/images/hots.png", "hots"),
+            new figuraHeartStone(98, "./assets/images/hs.svg", "hs"),
+            new figuraOverwatch(99, "./assets/images/ow.svg", "ow"),
+            new figuraWow(100, "./assets/images/wow.svg", "wow")
+        ], 25, 1)
     ];
 };
 
+
 /**
- * Selecciona de forma aleatoria 4 tests de un array de tests.
+ * Selecciona de forma aleatoria 4 tests de un array de tests sin repeticiones.
  * @param {Array<Test>} tests - Array de tests disponibles.
- * @returns {Set<Test>} Conjunto de tests aleatorios.
+ * @returns {Array<Test>} Conjunto de tests aleatorios.
  */
 const getRandomTests = (tests) => {
-    const randomIndexes = [];
-    while (randomIndexes.length < 4) {
+    const randomIndexes = new Set();
+
+    // Seleccionar 4 índices aleatorios únicos
+    while (randomIndexes.size < 4) {
         const randomIndex = Math.floor(Math.random() * tests.length);
-        if (!randomIndexes.includes(randomIndex)) {
-            randomIndexes.push(randomIndex);
-        }
+        randomIndexes.add(randomIndex); // El Set se encarga de evitar duplicados
     }
-    return new Set(randomIndexes.map(index => tests[index]));
+
+    // Convertir los índices seleccionados a los tests correspondientes
+    return Array.from(randomIndexes).map(index => tests[index]);
 };
+
 
 /**
  * Función asíncrona para obtener tests desde IndexedDB.
