@@ -92,15 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
          */
         if (nextTest) {
             nextTest.addEventListener('click', () => {
-                if (testCounter < 3) {
+                if (testCounter < 5) {
                     testCounter++;
-                    numberTest.innerHTML = `${testCounter}/3`;
-                    nextTest.innerHTML = testCounter === 3 ? 'Finalizar' : 'Siguiente';
+                    numberTest.innerHTML = `${testCounter}/5`;
+                    nextTest.innerHTML = testCounter === 5 ? 'Finalizar' : 'Siguiente';
                                     
                     loadRandomTest();
                 } else {
                     // Finalización del test
-                    numberTest.innerHTML = "3/3";
+                    numberTest.innerHTML = "5/5";
                     nextTest.innerHTML = 'Finalizar';
                     tiempoFinal = Date.now(); // Guardamos el tiempo exacto cuando se finaliza el test
                     
