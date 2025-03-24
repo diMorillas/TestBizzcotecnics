@@ -31,10 +31,10 @@ export class Jugador extends Persona {
     static getDetalle(tiempo, jugadores) {
         const jugadorEncontrado = jugadores.find(jugador => jugador.tiempo === tiempo);
 
-        if (jugadorEncontrado) {
+        if (jugadorEncontrado && jugadorEncontrado instanceof Jugador) { // Verifica que sea una instancia de Jugador
             return jugadorEncontrado.getDetalle(); // Llama al método getDetalle de la instancia de Jugador
         } else {
-            return "No se encontró un jugador con ese tiempo.";
+            return "No se encontró un jugador con ese tiempo o el jugador no es válido.";
         }
     }
 
