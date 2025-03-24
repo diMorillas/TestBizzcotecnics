@@ -52,8 +52,8 @@ export function timeRemainingTest(timeRemaining = 35) {
      */
 
     countdown = setInterval(() => {
-        timeRemaining--;  // Decrementamos el tiempo
-        console.log(timeRemaining);
+                timeRemaining--;  // Decrementamos el tiempo
+        counterModal.innerHTML = timeRemaining;  // Actualizamos el texto en el elemento
 
         timer.textContent = timeRemaining;  // Actualizamos el texto en el elemento
 
