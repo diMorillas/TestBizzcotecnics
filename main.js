@@ -1,3 +1,13 @@
+/**
+ * @file main.js
+ * @date 24 marzo 2025
+ * @author 
+ *   - Didac Morillas
+ *   - Pau Morillas
+ * @version 1.0.5
+ * @description Módulo principal que inicializa el juego, maneja los eventos del DOM, la gestión de jugadores, tests y comunicación con IndexedDB.
+ */
+
 import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { addPlayer, removeLastElement, removeFirstElement } from './functions.js';
@@ -30,19 +40,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let startTime = Date.now(); // Guardamos el tiempo de inicio
     let arrowTime = true;
 
-    // Map para almacenar las partidas finalizadas
-    let partidas = new Map(); // Cada vez que finaliza una partida con el botón "finalizar", se añade con un ID autoincremental.
+    /**
+     * Map para almacenar las partidas finalizadas.
+     * Cada partida se añade con un ID autoincremental.
+     * @type {Map<number, Object>}
+     */
+    let partidas = new Map();
 
     initDragAndDrop();
 
-    // Al hacer clic en el botón de aceptación, iniciamos el test
+    /**
+     * Evento click sobre el botón de aceptación que inicia el test.
+     * Inicia el test, oculta el modal y muestra la página de test.
+     */
     acceptButton.addEventListener('click', () => {
         iniciarTest();  // Oculta el modal y muestra la página de test
         countdown = timeRemainingTest();  // Inicia el temporizador y almacena el ID del intervalo
     });
 
-    mostrarModal();  // Muestra el modal cuando se carga la página
+    // Mostrar el modal cuando se carga la página
+    mostrarModal();
 
+    /**
+     * Función para reproducir la música de fondo.
+     * Actualiza el estado en el LocalStorage para mantener la reproducción activa.
+     */
     const playMusic = () => {
         if (music) {
             music.play().catch(error => console.error('Error al intentar reproducir la música:', error));
@@ -55,14 +77,19 @@ document.addEventListener('DOMContentLoaded', () => {
         music.play().catch(error => console.error('Error al intentar reproducir la música:', error));
     }
 
+    // Activar música al hacer clic en cualquier parte del body
     document.body.addEventListener('click', playMusic);
 
     // Control del contador de tests
-    let tiempoFinal;  // Esta variable almacenará el tiempo final cuando termine el test
+    let tiempoFinal;  // Almacena el tiempo final cuando termina el test
     if (numberTest) {
         let testCounter = 1;
         numberTest.innerHTML = `${testCounter}/3`;
 
+        /**
+         * Evento click en el botón "nextTest" que controla la navegación entre tests.
+         * Incrementa el contador y al finalizar guarda los datos de la partida.
+         */
         if (nextTest) {
             nextTest.addEventListener('click', () => {
                 if (testCounter < 3) {
@@ -82,24 +109,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Usar el tamaño actual del map + 1 como ID autoincremental
                     const partidaId = partidas.size + 1;
                     
-                    // Crear un objeto con los datos de la partida
+                    /**
+                     * Objeto con los datos de la partida.
+                     * @typedef {Object} DatosPartida
+                     * @property {number} tiempoInicio - Timestamp del inicio del test.
+                     * @property {number} tiempoFinal - Timestamp al finalizar el test.
+                     * @property {number} duracion - Duración del test en segundos.
+                     * @property {number} score - Puntuación obtenida.
+                     */
                     const datosPartida = {
                         tiempoInicio: startTime,
                         tiempoFinal: tiempoFinal,
                         duracion: tiempoTest,
                         score: parseInt(sessionStorage.getItem('score')) || 0,
-                        // Puedes agregar más propiedades si es necesario (por ejemplo, jugador, test completados, etc.)
                     };
                     
                     // Guardar la partida en el map
                     partidas.set(partidaId, datosPartida);
-                    console.log("Partida guardada:", partidas.get(partidaId,datosPartida));
+                    console.log("Partida guardada:", partidas.get(partidaId, datosPartida));
                     
                     setTimeout(() => {
                         document.body.classList.remove('timeout');        
                         pageTest.style.display = 'none';
                         clearInterval(countdown);  // Limpiar el temporizador
-                        //console.log('Cuenta regresiva terminada de manera satisfactoria');
                         pageForm.style.display = 'block';
                     }, 500);
                 }
@@ -107,7 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Obtener jugadores del LocalStorage
+    /**
+     * Recupera la lista de jugadores almacenada en LocalStorage.
+     * @returns {Array<Object>} Array de jugadores o vacío si no hay datos.
+     */
     function getJugadores() {
         try {
             const data = localStorage.getItem("jugadores");
@@ -119,18 +154,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Guardar jugadores en el LocalStorage
+    /**
+     * Guarda el array de jugadores en LocalStorage.
+     * @param {Array<Object>} jugadores - Array de jugadores a guardar.
+     */
     function guardarJugadores(jugadores) {
         localStorage.setItem("jugadores", JSON.stringify(jugadores));
-        //console.log("Jugadores guardados en LocalStorage:", jugadores);
     }
 
-    // Guardar el nuevo jugador y actualizar la lista
     let jugadores = getJugadores();
+
+    /**
+     * Evento click en el botón de envío del formulario.
+     * Valida la entrada del usuario, crea un nuevo jugador, actualiza la lista y la puntuación.
+     */
     btnForm.addEventListener('click', () => {
         const nameForm = document.getElementById('nameForm').value.trim();
         const emailForm = document.getElementById('emailForm').value.trim();
-        // Regex 
+        // Regex para validar nombre y email
         const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -153,17 +194,13 @@ document.addEventListener('DOMContentLoaded', () => {
         guardarJugadores(jugadores);
         sessionStorage.setItem('score', 0);
         
-        // Crear un array de puntuaciones
-        // let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
-
+        // Calcular la media de las puntuaciones
         let puntuaciones = [];
         for (let i in jugadores) {
             puntuaciones.push(jugadores[i].puntuacio);
         }
         console.log(puntuaciones);
 
-
-        // Calcular la media de las puntuaciones
         let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
         avgScore.innerHTML = mediaTotal.toFixed(2);
 
@@ -174,26 +211,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         puntosJugador.innerHTML = puntuacionJugador;
 
-        //console.log("Jugador añadido:", nuevoJugador);
         console.log("Jugadores actuales:", jugadores);
 
-        actualizarListaJugadores(); // Refrescar la lista
-        actualizarMedia(jugadores); // Actualizar la media de tiempos después de añadir un jugador
+        actualizarListaJugadores(); // Refrescar la lista en el DOM
+        actualizarMedia(jugadores); // Actualizar la media de tiempos
         mostrarMejoresTiempos(jugadores);
 
         pageForm.style.display = 'none';
         pageFinal.style.display = 'block';
     });
 
-    // Función para actualizar la lista de jugadores en el DOM
+    /**
+     * Actualiza la lista de jugadores mostrada en el DOM.
+     * Ordena la lista de jugadores según el tiempo y actualiza la media.
+     */
     function actualizarListaJugadores() {
         playerList.innerHTML = '';
 
-        // Orden por tiempo
+        // Ordenar por tiempo de forma ascendente o descendente
         if (arrowTime) {
-            jugadores.sort((a, b) => a.tiempo - b.tiempo); // Orden ascendente por tiempo
+            jugadores.sort((a, b) => a.tiempo - b.tiempo);
         } else {
-            jugadores.sort((a, b) => b.tiempo - a.tiempo); // Orden descendente por tiempo
+            jugadores.sort((a, b) => b.tiempo - a.tiempo);
         }
 
         jugadores.forEach(jugador => {
@@ -206,10 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarMedia(jugadores);
     }
 
-    // Crear un array de puntuaciones
+    // Calcular y mostrar la media de las puntuaciones actuales
     let puntuaciones = jugadores.map(jugador => jugador.puntuacio);
-
-    // Calcular la media de las puntuaciones
     let mediaTotal = puntuaciones.reduce((acc, current) => acc + current, 0) / jugadores.length;
     avgScore.innerHTML = mediaTotal.toFixed(2);
 
@@ -220,17 +257,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     puntosJugador.innerHTML = puntuacionJugador;
     
-    // Añadir nuevo jugador vía Prompts
+    /**
+     * Evento click en el botón "addNewPlayer" para añadir un jugador vía prompt.
+     * Actualiza la lista y la media de tiempos.
+     */
     let btnAddPlayer = document.getElementById('addNewPlayer');
     btnAddPlayer.addEventListener('click', () => {
-        jugadores = addPlayer(jugadores); // Reasignamos el array con el nuevo jugador
-        guardarJugadores(jugadores); // Guardamos en LocalStorage
-        actualizarListaJugadores(); // Actualizamos la lista en el DOM
+        jugadores = addPlayer(jugadores); // Reasigna el array con el nuevo jugador
+        guardarJugadores(jugadores); // Guarda en LocalStorage
+        actualizarListaJugadores(); // Actualiza la lista en el DOM
         mostrarMejoresTiempos(jugadores);
         actualizarMedia(jugadores);
     });
 
-    // Borrar el último elemento por índice
+    /**
+     * Evento click en el botón "removeLastPlayer" para borrar el último jugador.
+     */
     let btnRemoveLastPlayer = document.getElementById('removeLastPlayer');
     btnRemoveLastPlayer.addEventListener('click', () => {
         removeLastElement(jugadores);
@@ -239,6 +281,9 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarMejoresTiempos(jugadores);
     });
     
+    /**
+     * Evento click en el botón "removeFirstPlayer" para borrar el primer jugador.
+     */
     let btnRemoveFirstPlayer = document.getElementById('removeFirstPlayer');
     btnRemoveFirstPlayer.addEventListener('click', () => {
         removeFirstElement(jugadores);
@@ -247,60 +292,35 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarMejoresTiempos(jugadores);
     });
 
-    // Orden por tiempo
+    /**
+     * Evento click en el botón "signTime" para cambiar el orden de los jugadores.
+     * Alterna entre orden ascendente y descendente.
+     */
     signTime.addEventListener('click', () => {
         arrowTime = !arrowTime;
         signTime.innerHTML = arrowTime ? '▲' : '▼';
         actualizarListaJugadores();
     });
 
-    // Media tiempo
+    // Inicializar la media de tiempos y la lista de jugadores en el DOM
     actualizarMedia(getJugadores());
     actualizarListaJugadores();
 
-    // Volver al test
+    /**
+     * Evento click en el botón "newTest" para reiniciar el test.
+     */
     startAgain.addEventListener('click', () => {
         location.reload();
     });
 
     console.log('Successfully Connected to main.js');
-    // Mostrar el Map de partidas en formato tabla
     console.log("Partidas:");
     console.table([...partidas.entries()].map(([id, partida]) => ({ ID: id, ...partida })));
 
-
-
-    // const createDefaultTests = () => {
-    //     return [
-    //         new Test([
-    //             new figuraHeartStone(1, "./assets/images/hs.svg", "hs"),
-    //             new figuraHots(2, "./assets/images/hots.png", "hots"),
-    //             new figuraWow(3, "./assets/images/wow.svg", "Wow"),
-    //             new figuraOverwatch(4, "./assets/images/ow.svg", "ow")
-
-    //         ], 1,1),
-    //         new Test([
-    //             new figuraHots(5, "./assets/images/hots.png", "hots"),
-    //             new figuraOverwatch(6, "./assets/images/ow.svg", "ow"),
-    //             new figuraHeartStone(7, "./assets/images/hs.svg", "hs"),
-    //             new figuraWow(8, "./assets/images/wow.svg", "wow")
-
-    //         ], 2,1),
-    //         new Test([
-    //             new figuraHots(9, "./assets/images/hots.png", "hots"),
-    //             new figuraHots(10, "./assets/images/hots.png", "hots"),
-    //             new figuraWow(11, "./assets/images/wow.svg", "wow"),
-    //             new figuraWow(12, "./assets/images/wow.svg", "wow")
-    //         ], 3,1),
-    //         new Test([
-    //             new figuraOverwatch(13, "./assets/images/ow.svg", "ow"),
-    //             new figuraHots(14, "./assets/images/hots.png", "hots"),
-    //             new figuraWow(15, "./assets/images/wow.svg", "wow"),
-    //             new figuraHeartStone(16, "./assets/images/hs.svg", "hs")
-    //         ], 4,1)
-    //     ];
-    // };
-    
+    /**
+     * Método que extiende la funcionalidad de Test para crear tests por defecto.
+     * @returns {Array<Test>} Array de tests predeterminados.
+     */
     Test.prototype.createDefaultTests = function() {
         return [
             new Test([
@@ -330,9 +350,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
     };
     
-
-
-
+    /**
+     * Selecciona de forma aleatoria 4 tests de un array de tests.
+     * @param {Array<Test>} tests - Array de tests disponibles.
+     * @returns {Set<Test>} Conjunto de tests aleatorios.
+     */
     const getRandomTests = (tests) => {
         const randomIndexes = [];
         while (randomIndexes.length < 4) {
@@ -344,18 +366,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Set(randomIndexes.map(index => tests[index]));
     };
     
+    /**
+     * Función asíncrona para obtener tests desde IndexedDB.
+     * Si no hay tests almacenados, crea tests por defecto.
+     * @async
+     * @returns {Promise<Set<Test>|null>} Conjunto de tests aleatorios o null en caso de error.
+     */
     const hasTest = async () => {
         try {
             const tests = await indexedDbManager("getAllTests");
             if (tests && tests.length > 0) {
                 return getRandomTests(tests);
             } else {
-                // const newTests = createDefaultTests();
                 const newTests = new Test().createDefaultTests();
                 for (let test of newTests) {
                     await indexedDbManager("addTest", test);
                 }
-                // Recuperar los tests después de añadirlos
                 const updatedTests = await indexedDbManager("getAllTests");
                 return getRandomTests(updatedTests);
             }
@@ -368,7 +394,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Variable global para almacenar el Set de tests aleatorios
     let randomTestsGlobal = null;
     
-    // Función para cargar un test aleatorio
+    /**
+     * Carga un test aleatorio en el DOM a partir del conjunto global de tests.
+     * Actualiza las imágenes de las figuras y almacena la respuesta correcta.
+     */
     function loadRandomTest() {
         if (!randomTestsGlobal) {
             console.error("No hay tests cargados");
@@ -389,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
     
-        // Limpiar el contenedor (por ejemplo, el cuarto contenedor)
+        // Limpiar el contenedor (por ejemplo, el contenedor de la cuarta figura)
         const figureFour = document.querySelector('.figureFour');
         if (figureFour) figureFour.innerHTML = "";
     
@@ -403,24 +432,22 @@ document.addEventListener('DOMContentLoaded', () => {
         figureTwo.src = selectedTest.figuras[1].urlFigura;
         figureThree.src = selectedTest.figuras[2].urlFigura;
     
-        // Si los elementos img no estaban en el DOM, agrégales al contenedor
+        // Si los elementos img no estaban en el DOM, se agregan a sus contenedores
         document.querySelector('.figureOne')?.appendChild(figureOne);
         document.querySelector('.figureTwo')?.appendChild(figureTwo);
         document.querySelector('.figureThree')?.appendChild(figureThree);
     
-        // Almacenar globalmente la respuesta correcta (el tipo de la figura faltante)
+        // Almacenar globalmente la respuesta correcta (tipo de la figura faltante)
         window.correctOption = selectedTest.figuras[3].tipoFigura;
-        //console.log("Respuesta correcta:", window.correctOption);
     }
     
-    // Inicializamos los tests y guardamos el Set globalmente
+    // Inicializar tests y cargar el primer test
     hasTest().then(rt => {
         if (rt) {
             randomTestsGlobal = rt;
-            loadRandomTest(); // Cargar el primer test
+            loadRandomTest();
         }
     });
 
-
-    //Prototype Figura
+    // Fin de la documentación y del código principal
 });
