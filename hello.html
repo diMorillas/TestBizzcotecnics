@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <meta name="theme-color" content="#4285f4" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Maname&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet" />
+    <title>Test BlizzcoTecnic</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url(./assets/images/bg2.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            font-family: "Maname", serif;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+
+        .containerTest {
+            margin: 0 auto;
+
+            width: 1200px;
+            height: 100%;
+            background-color: #E0E0E0;
+            border: 3px 0px solid black;
+        }
+
+        .containerAlerta {
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 30px;
+            background-color: #B0B0B0;
+            width: 600px;
+            padding: 20px 120px;
+            border-radius: 10px;
+        }
+
+        .containerIconos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+        }
+
+        .botonTest {
+            font-family: "Roboto Mono", monospace;
+
+            border: none;
+            background: linear-gradient(to bottom, rgba(255, 249, 249, 0.33) 0%, rgba(153, 150, 150, 0.33) 100%);
+            padding: 10px 10px;
+            font-weight: 400;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="containerTest">
+        <h1 style="text-align: center;margin-top: 20px;">Test BlizzcoTecnics</h1>
+        <div class="containerAlerta">
+            <p>Realiza este test para ver tu nivel de logica y reaccion frente a un patron aleatorio de figuras de
+                iconicas dentro del universo de Blizzard</p>
+        </div>
+        <br><br><br>
+        <h2 style="text-align: center;">Iconos que se mostraran</h2>
+        <br>
+        <div class="containerIconos">
+            <img src="./assets/images/hots.png" alt="">
+            <img src="./assets/images/hs.svg" alt="">
+            <img src="./assets/images/wow.svg" alt="">
+            <img src="./assets/images/ow.svg" alt="">
+            <br><br><br><br><br>
+        </div>
+        <br><br><br>
+        <div style="text-align: center;">
+            <button class="botonTest" onclick="location.href = 'index.html';">Iniciar Test</button>
+        </div>
+
+
+    </div>
+    <script src="./main.js"></script>
+</body>
+
+</html>
