@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let tiempoFinal;  // Almacena el tiempo final cuando termina el test
     if (numberTest) {
         let testCounter = 1;
-        numberTest.innerHTML = `${testCounter}/3`;
+        numberTest.innerHTML = `${testCounter}/5`;
 
         /**
          * Evento click en el botón "nextTest" que controla la navegación entre tests.
