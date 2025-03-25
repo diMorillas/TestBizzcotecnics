@@ -8,7 +8,7 @@
  * @description Módulo principal que inicializa el juego, maneja los eventos del DOM, la gestión de jugadores, tests y comunicación con IndexedDB.
  */
 
-import { actualizarMedia, mostrarMejoresTiempos, Jugador } from './Jugador.js';
+import { actualizarMedia, mostrarMejoresTiempos,Jugador } from './Jugador.js';
 import { initDragAndDrop } from './drag.js';
 import { addPlayer, removeLastElement, removeFirstElement } from './functions.js';
 import { mostrarModal, iniciarTest, timeRemainingTest } from './modal.js';
@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const music = document.getElementById('bg-music');
     const avgScore = document.getElementById('mediaPuntuacion');
     const puntosJugador = document.getElementById('puntosJugador');
+    const datosDiv = document.getElementById("datosJugador");
 
     let countdown; // Variable para almacenar el intervalo del temporizador
     let startTime = Date.now(); // Guardamos el tiempo de inicio
@@ -579,5 +580,6 @@ hasTest().then(rt => {
         loadRandomTest();
     }
 });
+
 
 });

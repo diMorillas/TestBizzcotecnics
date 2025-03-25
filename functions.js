@@ -32,7 +32,7 @@ export function addPlayer(array) {
     }
 
     let tiempo = Number(prompt('Tiempo en hacer el test'));
-    let puntuacio = Number(prompt('Puntuacion sobre 3'));
+    let puntuacio = Number(prompt('Puntuacion sobre 5'));
 
     let newPlayer = new Jugador(nombre, email, tiempo, puntuacio);
     array.push(newPlayer);

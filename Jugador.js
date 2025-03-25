@@ -5,7 +5,8 @@
  *   - Didac Morillas
  *   - Pau Morillas
  * @version 1.0.5
- * @description Módulo que define la clase abstracta Persona, la clase Jugador y funciones auxiliares para gestionar jugadores, incluyendo el cálculo de la media de tiempos y puntuaciones, así como la visualización de los mejores tiempos.
+ * @description Módulo que define la clase abstracta Persona, la clase Jugador y funciones auxiliares para gestionar jugadores, 
+ * incluyendo el cálculo de la media de tiempos y puntuaciones, así como la visualización de los mejores tiempos.
  */
 
 /**
@@ -35,6 +36,14 @@ export class Persona {
      */
     crearJugador(tiempo, puntuacio) {
         throw new Error("Método abstracto 'crearJugador' debe ser implementado");
+    }
+
+    /**
+     * Método abstracto para mostrar los datos de la persona.
+     * @throws {Error} Si no se implementa en una subclase.
+     */
+    mostrarDatos() {
+        throw new Error("Método abstracto 'mostrarDatos' debe ser implementado");
     }
 }
 
@@ -79,6 +88,25 @@ export class Jugador extends Persona {
      */
     setPuntuacio(puntuacio) {
         this.puntuacio = puntuacio;
+    }
+
+    /**
+     * Implementación del método mostrarDatos.
+     * Actualiza el contenido del elemento del DOM con id "datosJugador" para mostrar todos los datos del jugador.
+     */
+    mostrarDatos() {
+        const datosDiv = document.getElementById("datosJugador");
+        if (!datosDiv) {
+            console.error("Elemento 'datosJugador' no encontrado en el DOM");
+            return;
+        }
+        datosDiv.innerHTML = `
+            <br>
+            <p><strong>Jugador:</strong> ${this.nombre}</p>
+            <p><strong>Email:</strong> ${this.email}</p>
+            <p><strong>Tiempo:</strong> ${this.tiempo} segundos</p>
+            <p><strong>Puntuación:</strong> ${this.puntuacio}</p>
+        `;
     }
 }
 
@@ -127,3 +155,29 @@ export function mostrarMejoresTiempos(jugadores) {
         ? "No hay jugadores con tiempos menores a 10 segundos"
         : mejoresJugadores.map(jugador => `<li>${jugador.nombre} - ${jugador.tiempo} segundos</li>`).join('');
 }
+
+/**
+ * Inicializa un elemento en el DOM que permite ingresar el nombre y tiempo del jugador.
+ * Al hacer clic en el botón, se solicitan los datos mediante prompts, se crea un jugador y se muestran sus datos.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    const boton = document.getElementById("mostrarDatos");
+    
+    if (boton) {
+        boton.addEventListener("click", () => {
+            const nombre = prompt("Introduce el nombre del jugador:");
+            const email = prompt("Introduce el correo del jugador:");
+            const tiempo = parseFloat(prompt("Introduce el tiempo del jugador en segundos:"));
+            const puntuacio = parseInt(prompt("Introduce la puntuación del jugador:"), 10);
+
+            if (nombre && email && !isNaN(tiempo) && !isNaN(puntuacio)) {
+                const jugador = new Jugador(nombre, email, tiempo, puntuacio);
+                jugador.mostrarDatos();
+            } else {
+                console.log("Error: Datos inválidos.");
+            }
+        });
+    } else {
+        console.error("No se encontró un botón con id 'mostrarDatos'");
+    }
+});
